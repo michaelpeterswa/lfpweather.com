@@ -1,4 +1,4 @@
-FROM oven/bun:canary AS base
+FROM oven/bun:1.1 AS base
 WORKDIR /usr/src/app
 
 # install dependencies into temp directory
