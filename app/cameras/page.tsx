@@ -1,4 +1,5 @@
-import CameraCard, { CameraCardProps } from "@/components/images/camera/camera";
+import { CameraCardProps } from "@/components/images/camera/camera";
+import CameraContainer from "@/components/images/camera/camera-container";
 
 const camerasProps: CameraCardProps[] = [
   {
@@ -64,15 +65,5 @@ const camerasProps: CameraCardProps[] = [
 ];
 
 export default function Cameras() {
-  return (
-    <div className="">
-      <h1 className="text-4xl text-center w-full">camera views</h1>
-      <div className="flex justify-center flex-wrap gap-2 md:gap-4 py-4">
-        {camerasProps.map(
-          (camera) =>
-            !camera.disabled && <CameraCard key={camera.id} props={camera} />
-        )}
-      </div>
-    </div>
-  );
+  return <CameraContainer title="Camera Views" camerasProps={camerasProps} />;
 }

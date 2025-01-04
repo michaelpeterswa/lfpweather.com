@@ -30,9 +30,7 @@ export default function RootLayout({
         >
           <div className="flex flex-col items-center justify-center px-4 min-h-screen">
             <Navigation />
-            <div className="container bg-base border rounded-lg shadow p-4">
-              {children}
-            </div>
+            {children}
             <div className="grow" />
             <Footer />
           </div>
