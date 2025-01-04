@@ -13,11 +13,11 @@ import { NavigationLink } from "./link";
 
 export default function Navigation() {
   const sheetLinks: NavigationLink[] = [
-    { id: 1, title: "About", href: "/about" },
+    { id: 1, title: "about", href: "/about" },
   ];
 
   const barLinks: NavigationLink[] = [
-    { id: 1, title: "About", href: "/about" },
+    { id: 1, title: "about", href: "/about" },
   ];
 
   return (
