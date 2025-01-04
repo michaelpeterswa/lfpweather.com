@@ -1,5 +1,7 @@
 import LineWrapper from "@/components/charts/line/linewrapper";
 
+export const dynamic = "force-dynamic";
+
 export default function Home() {
   return (
     <div className="">
