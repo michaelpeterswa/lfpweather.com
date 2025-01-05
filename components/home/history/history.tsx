@@ -1,5 +1,6 @@
 import LineWrapper from "@/components/charts/line/linewrapper";
 import { LineChartCardConfig } from "@/components/charts/line/types";
+import Container from "@/components/layout/container/container";
 import Title from "@/components/layout/container/title";
 
 const blocks: blockProps[] = [
@@ -7,7 +8,7 @@ const blocks: blockProps[] = [
     field: "temperature",
     lineChartCardConfig: {
       title: "Temperature",
-      description: "current temperature in fahrenheit",
+      description: "temperature in fahrenheit",
       unit: "°F",
     },
   },
@@ -15,7 +16,7 @@ const blocks: blockProps[] = [
     field: "humidity",
     lineChartCardConfig: {
       title: "Humidity",
-      description: "current humidity in percent",
+      description: "humidity in percent",
       unit: "%",
     },
   },
@@ -23,7 +24,7 @@ const blocks: blockProps[] = [
     field: "pressure",
     lineChartCardConfig: {
       title: "Pressure",
-      description: "current pressure in inches of mercury",
+      description: "pressure in inches of mercury",
       unit: " inHg",
     },
   },
@@ -31,8 +32,32 @@ const blocks: blockProps[] = [
     field: "solar_radiation",
     lineChartCardConfig: {
       title: "Solar Radiation",
-      description: "current solar radiation in watts per square meter",
+      description: "solar radiation in watts per square meter",
       unit: " W/m²",
+    },
+  },
+  {
+    field: "uv_index",
+    lineChartCardConfig: {
+      title: "UV Index",
+      description: "uv index",
+      unit: "",
+    },
+  },
+  {
+    field: "wind_speed",
+    lineChartCardConfig: {
+      title: "Wind Speed",
+      description: "wind speed in miles per hour",
+      unit: " mph",
+    },
+  },
+  {
+    field: "rain_rate",
+    lineChartCardConfig: {
+      title: "Rain Rate",
+      description: "rain rate in counts per hour",
+      unit: " c/hr",
     },
   },
 ];
@@ -42,7 +67,15 @@ type blockProps = {
   lineChartCardConfig: LineChartCardConfig;
 };
 
-export default function HistoryBlock({
+export default function HistoryContainer() {
+  return (
+    <Container>
+      <HistoryBlock title="7-day history" lookback="7d" />
+    </Container>
+  );
+}
+
+function HistoryBlock({
   title,
   lookback,
 }: {
@@ -52,7 +85,7 @@ export default function HistoryBlock({
   return (
     <>
       <Title title={title} />
-      <div className="flex justify-center flex-wrap gap-2 md:gap-4 py-4">
+      <div className="flex w-full justify-center flex-wrap gap-2 md:gap-4 py-4">
         {blocks.map((block) => (
           <LineWrapper
             key={block.field}

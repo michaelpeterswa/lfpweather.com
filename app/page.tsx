@@ -1,8 +1,9 @@
 import AlertsContainer from "@/components/alerts/alerts";
-import HistoryBlock from "@/components/home/history/history-block";
+import ForecastContainer from "@/components/forecast/forecast";
+import HistoryContainer from "@/components/home/history/history";
 import { CameraCardProps } from "@/components/images/camera/camera";
 import CameraContainer from "@/components/images/camera/camera-container";
-import Container from "@/components/layout/container/container";
+import CurrentContainer from "../components/current/current";
 
 export const dynamic = "force-dynamic";
 
@@ -25,9 +26,9 @@ export default function Home() {
   return (
     <>
       <AlertsContainer zone="WAZ558" />
-      <Container>
-        <HistoryBlock title="7-day history" lookback="7d" />
-      </Container>
+      <CurrentContainer />
+      <HistoryContainer />
+      <ForecastContainer wfo="SEW" x="127" y="75" />
       <CameraContainer title="local cameras" camerasProps={camerasProps} />
     </>
   );
