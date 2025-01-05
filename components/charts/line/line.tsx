@@ -66,7 +66,7 @@ export function LineChartCard({ config }: { config: LineChartCardConfig }) {
   }
 
   return (
-    <Card className="w-11/12 md:w-5/12">
+    <Card className="w-full md:w-5/12">
       <CardHeader>
         <CardTitle className="tracking-widest">{config.title}</CardTitle>
         <CardDescription>{config.description}</CardDescription>
@@ -84,9 +84,10 @@ export function LineChartCard({ config }: { config: LineChartCardConfig }) {
             <CartesianGrid vertical={false} />
             <YAxis
               domain={["auto", "auto"]}
-              tickCount={5}
+              tickCount={3}
               scale={"linear"}
               unit={config.unit}
+              width={30}
             />
             <XAxis dataKey="time" tickLine={true} axisLine={true} />
             <ChartTooltip cursor={true} content={<ChartTooltipContent />} />
