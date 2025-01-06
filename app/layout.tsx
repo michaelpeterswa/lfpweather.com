@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme/theme-provider";
 import { funneldisplay } from "./fonts";
 import { cn } from "@/lib/utils";
 import Navigation from "@/components/navigation/navigation";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 export const metadata: Metadata = {
   title: "lfpweather.com",
@@ -36,6 +37,7 @@ export default function RootLayout({
           </div>
         </ThemeProvider>
       </body>
+      <GoogleAnalytics gaId="G-ZP78E0LCNM" />
     </html>
   );
 }
