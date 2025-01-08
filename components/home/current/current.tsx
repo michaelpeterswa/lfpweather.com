@@ -1,5 +1,5 @@
-import Container from "../layout/container/container";
-import Title from "../layout/container/title";
+import Container from "../../layout/container/container";
+import Title from "../../layout/container/title";
 import CurrentCard from "./current-card";
 
 export default function CurrentContainer() {
