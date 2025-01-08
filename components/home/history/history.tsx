@@ -1,5 +1,5 @@
-import LineWrapper from "@/components/charts/line/linewrapper";
-import { LineChartCardConfig } from "@/components/charts/line/types";
+import LineWrapper from "@/components/home/charts/line/linewrapper";
+import { LineChartCardConfig } from "@/components/home/charts/line/types";
 import Container from "@/components/layout/container/container";
 import Title from "@/components/layout/container/title";
 

@@ -1,9 +1,9 @@
-import AlertsContainer from "@/components/alerts/alerts";
-import ForecastContainer from "@/components/forecast/forecast";
+import AlertsContainer from "@/components/home/alerts/alerts";
+import ForecastContainer from "@/components/home/forecast/forecast";
 import HistoryContainer from "@/components/home/history/history";
 import { CameraCardProps } from "@/components/images/camera/camera";
 import CameraContainer from "@/components/images/camera/camera-container";
-import CurrentContainer from "../components/current/current";
+import CurrentContainer from "../components/home/current/current";
 
 export const dynamic = "force-dynamic";
 
