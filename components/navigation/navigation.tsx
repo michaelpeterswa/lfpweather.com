@@ -48,7 +48,7 @@ export default function Navigation() {
           </div>
         </SheetContent>
       </Sheet>
-      <div className="w-[150px] hidden lg:flex">
+      <div className="lg:w-[150px] hidden lg:flex">
         <Link
           href="/"
           className="flex items-center gap-2 px-2"
@@ -58,7 +58,7 @@ export default function Navigation() {
           <span className="text-lg">lfpweather.com</span>
         </Link>
       </div>
-      <div className="flex grow justify-center">
+      <div className="flex lg:grow justify-center">
         <NavigationMenu className="hidden lg:flex">
           <NavigationMenuList>
             {barLinks.map((link) => (
@@ -75,7 +75,13 @@ export default function Navigation() {
           </NavigationMenuList>
         </NavigationMenu>
       </div>
-      <div className="w-[150px]">
+      <div className="grow justify-items-center lg:hidden">
+        <div className="flex items-center gap-1 px-2">
+          <CloudSun />
+          <span>lfp</span>
+        </div>
+      </div>
+      <div className="lg:w-[150px]">
         <div className="flex justify-end">
           <ModeToggle />
         </div>
