@@ -1,3 +1,4 @@
+import { Separator } from "@/components/ui/separator";
 import Container from "../../layout/container/container";
 import Title from "../../layout/container/title";
 import { NWSGridpointForecastResponse } from "@/components/home/forecast/types";
@@ -48,6 +49,7 @@ export default async function ForecastContainer({
                 className="bg-base border rounded-lg shadow p-4 mb-4 w-11/12"
               >
                 <h1 className="text-xl">{period.name}</h1>
+                <Separator className="mt-3 mb-2" />
                 <h2>{period.detailedForecast}</h2>
               </div>
             ))}

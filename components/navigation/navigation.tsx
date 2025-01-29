@@ -7,9 +7,11 @@ import {
   NavigationMenuList,
   NavigationMenuLink,
 } from "@/components/ui/navigation-menu";
-import { CloudSun, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import { ModeToggle } from "../theme/mode-toggle";
 import { NavigationLink } from "./link";
+import Favicon32 from "@/public/lfpweather/svg/favicon-32.svg";
+import Main from "@/public/lfpweather/svg/main.svg";
 
 export default function Navigation() {
   const sheetLinks: NavigationLink[] = [
@@ -31,7 +33,7 @@ export default function Navigation() {
         </SheetTrigger>
         <SheetContent side="left">
           <Link href="/" className="flex items-center gap-2" prefetch={false}>
-            <CloudSun />
+            <Favicon32 className="h-10 w-10 mr-2 fill-primary" />
             <span className="text-lg">lfpweather.com</span>
           </Link>
           <div className="grid gap-4 py-6">
@@ -54,8 +56,8 @@ export default function Navigation() {
           className="flex items-center gap-2 px-2"
           prefetch={false}
         >
-          <CloudSun />
-          <span className="text-lg">lfpweather.com</span>
+          <Favicon32 className="h-10 w-10 mr-2 fill-primary" />
+          <span className="text-lg text-primary">lfpweather.com</span>
         </Link>
       </div>
       <div className="flex lg:grow justify-center">
@@ -75,10 +77,9 @@ export default function Navigation() {
           </NavigationMenuList>
         </NavigationMenu>
       </div>
-      <div className="grow justify-items-center lg:hidden">
-        <div className="flex items-center gap-1 px-2">
-          <CloudSun />
-          <span>lfp</span>
+      <div className="flex grow justify-center lg:hidden">
+        <div className="flex gap-1 px-2 items-center">
+          <Main className="h-10 w-10 mr-2 fill-primary" />
         </div>
       </div>
       <div className="lg:w-[150px]">
