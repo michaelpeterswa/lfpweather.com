@@ -11,12 +11,7 @@ export default function manifest(): MetadataRoute.Manifest {
     theme_color: '#fff',
     icons: [
       {
-        src: '/favicon.ico',
-        sizes: '32x32',
-        type: 'image/x-icon',
-      },
-      {
-        src: '/lfpweather/1x/app-clip.png',
+        src: '/lfpweather/1x/.png',
         type: 'image/png',
         purpose: "any",
       },
