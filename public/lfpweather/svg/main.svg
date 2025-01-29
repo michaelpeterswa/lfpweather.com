@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <rect x="389.1" y="16.7" width="30.72" height="327.67" transform="translate(-36.06 134.44) rotate(-18.08)"/>
+  <rect x="292.13" y="66.27" width="30.72" height="327.67" transform="translate(-76.54 225.2) rotate(-36.08)"/>
+  <rect x="215.23" y="143.38" width="30.72" height="327.67" transform="translate(-153.48 313.67) rotate(-54.07)"/>
+  <rect x="165.91" y="240.47" width="30.72" height="327.67" transform="translate(-259.21 452.28) rotate(-72.07)"/>
+  <rect x=".52" y="496.53" width="327.67" height="30.72" transform="translate(-.56 .18) rotate(-.06)"/>
+  <rect x="17.67" y="604.07" width="327.67" height="30.72" transform="translate(-183.08 86.78) rotate(-18.06)"/>
+  <rect x="67.2" y="701.05" width="327.67" height="30.72" transform="translate(-377.39 273.21) rotate(-36.05)"/>
+  <rect x="144.28" y="777.98" width="327.67" height="30.72" transform="translate(-515.01 577.02) rotate(-54.05)"/>
+  <rect x="241.35" y="827.34" width="327.67" height="30.72" transform="translate(-521.38 968.4) rotate(-72.05)"/>
+  <rect x="497.4" y="695.82" width="30.72" height="327.67"/>
+  <rect x="604.95" y="678.71" width="30.72" height="327.67" transform="translate(-230.4 233.49) rotate(-18.04)"/>
+  <rect x="701.95" y="629.2" width="30.72" height="327.67" transform="translate(-329.27 573.7) rotate(-36.03)"/>
+  <rect x="778.91" y="552.16" width="30.72" height="327.67" transform="translate(-251.73 938.26) rotate(-54.03)"/>
+  <rect x="828.3" y="455.1" width="30.72" height="327.67" transform="translate(-5.42 1230.42) rotate(-72.03)"/>
+  <rect x="845.3" y="347.54" width="30.72" height="327.67" transform="translate(1371.71 -349.47) rotate(89.98)"/>
+  <rect x="679.75" y="388.46" width="327.67" height="30.72" transform="translate(-83.53 280.72) rotate(-18.02)"/>
+  <rect x="630.28" y="291.44" width="327.67" height="30.72" transform="translate(-28.62 525.55) rotate(-36.01)"/>
+  <rect x="553.27" y="214.45" width="327.67" height="30.72" transform="translate(109.75 674.97) rotate(-54.01)"/>
+  <rect x="456.23" y="165.02" width="327.67" height="30.72" transform="translate(256.94 714.38) rotate(-72)"/>
+  <rect x="497.15" y="-.49" width="30.72" height="327.67"/>
+  <g>
+    <path d="M384.6,587.61v-167.29h27.08v167.29h-27.08Z"/>
+    <path d="M453.92,587.61v-98.38h-22.91v-21.11h23.3v-24.9c0-7.7,2.09-13.44,6.28-17.22,4.18-3.79,9.99-5.68,17.42-5.68h33.65v21.11h-30.86v26.69h28.47v21.11h-28.27v98.38h-27.08Z"/>
+    <path d="M534.37,635.41v-140.01h-13.73v-27.28h28.27v18.92h8.37c3.98-6.9,9.49-12.18,16.52-15.84,7.04-3.65,15.47-5.48,25.3-5.48,12.08,0,22.33,2.56,30.77,7.67,8.43,5.11,14.87,12.31,19.31,21.61,4.45,9.29,6.67,20.25,6.67,32.86s-2.16,23.6-6.48,32.96c-4.32,9.36-10.55,16.56-18.72,21.61-8.17,5.05-17.96,7.57-29.37,7.57-9.03,0-16.9-1.76-23.61-5.28-6.7-3.52-11.84-8.53-15.43-15.04h-.81v65.72h-27.08ZM594.32,566.7c11.16,0,19.69-3.45,25.59-10.36,5.9-6.9,8.87-16.4,8.87-28.48s-2.96-21.58-8.87-28.48c-5.9-6.9-14.43-10.36-25.59-10.36-9.95,0-17.92,2.86-23.9,8.57-5.97,5.71-8.96,13.41-8.96,23.1v14.34c0,9.69,2.99,17.39,8.96,23.1,5.97,5.71,13.94,8.57,23.9,8.57Z"/>
+  </g>
+</svg>
