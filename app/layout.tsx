@@ -18,6 +18,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: "lfpweather.com",
   description: "lake forest park weather",
+  metadataBase: new URL("https://lfpweather.com"),
   openGraph: {
     title: "lfpweather.com",
     description:
