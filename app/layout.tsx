@@ -18,28 +18,21 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: "lfpweather.com",
   description: "lake forest park weather",
-  metadataBase: new URL("https://lfpweather.com"),
   openGraph: {
     title: "lfpweather.com",
     description:
       "providing local weather observations, forecasts, and cameras to the Lake Forest Park, Washington area",
     type: "website",
     url: "https://lfpweather.com",
-    images: [
-      {
-        url: "/lfpweather/1x/opengraph-meta-image.png",
-        width: 1200,
-        height: 630,
-        alt: "lfpweather.com",
-      },
-    ],
   },
   icons: [
-    { rel: "icon", url: "/lfpweather/1x/app" },
-    { rel: "apple-touch-icon", url: "/lfpweather/svg/app-clip.svg" },
+    {
+      rel: "apple-touch-icon",
+      url: "https://images.lfpweather.com/public/app-clip.svg",
+    },
     {
       rel: "mask-icon",
-      url: "/lfpweather/svg/app-clip-gradient.svg",
+      url: "https://images.lfpweather.com/public/app-clip-gradient.svg",
       color: "#000000",
     },
   ],
