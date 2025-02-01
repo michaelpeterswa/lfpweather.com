@@ -5,10 +5,12 @@ import { LastResponse } from "./types";
 export default async function CurrentCard({
   field,
   unit,
+  transform,
   title,
 }: {
   field: string;
   unit: string;
+  transform?: (n: number) => number;
   title: string;
 }) {
   const res = await fetch(
@@ -33,6 +35,11 @@ export default async function CurrentCard({
     );
   } else {
     const lastData = (await res.json()) as LastResponse;
+    let lastDataLast = lastData.last;
+
+    if (transform) {
+      lastDataLast = transform(lastDataLast);
+    }
 
     const formattedTime = formatDistance(
       Date.parse(lastData.time),
@@ -47,7 +54,7 @@ export default async function CurrentCard({
         <div className="flex flex-col justify-between items-center py-2">
           <h2>{title}</h2>
           <h1 className="text-xl font-semibold">
-            {lastData.last} {unit}
+            {lastDataLast} {unit}
           </h1>
           <h3>{formattedTime}</h3>
         </div>

@@ -19,7 +19,8 @@ export default function CurrentContainer() {
         <CurrentCard
           field="24h_rain"
           title="24 Hour Rain Totals"
-          unit="counts"
+          transform={(n) => n / 100}
+          unit="in"
         />
         <CurrentCard field="uv_index" title="UV Index" unit="" />
       </div>
