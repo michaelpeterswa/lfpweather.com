@@ -9,7 +9,7 @@ export default function Title({ title }: { title: string }) {
         className="flex justify-center items-baseline gap-2 w-full mb-4"
         id={linkName}
       >
-        <h1 className="text-4xl">{title}</h1>
+        <h1 className="text-3xl lg:text-4xl">{title}</h1>
         <Link href={`#${linkName}`} scroll={false}>
           <LinkIcon className="h-3 w-3 text-gray-600" />
         </Link>
