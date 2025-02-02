@@ -52,11 +52,11 @@ export default async function CurrentCard({
     return (
       <Card className="w-11/12 md:w-1/4">
         <div className="flex flex-col justify-between items-center py-2">
-          <h2>{title}</h2>
+          <h2 className="text-muted-foreground">{title}</h2>
           <h1 className="text-xl font-semibold">
             {lastDataLast} {unit}
           </h1>
-          <h3>{formattedTime}</h3>
+          <h3 className="text-muted-foreground text-sm">{formattedTime}</h3>
         </div>
       </Card>
     );
