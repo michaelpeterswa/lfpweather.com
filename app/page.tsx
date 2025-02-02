@@ -4,6 +4,7 @@ import HistoryContainer from "@/components/home/history/history";
 import { CameraCardProps } from "@/components/images/camera/camera";
 import CameraContainer from "@/components/images/camera/camera-container";
 import CurrentContainer from "../components/home/current/current";
+import AIForecastContainer from "@/components/home/ai-forecast/ai-forecast";
 
 export const dynamic = "force-dynamic";
 
@@ -27,6 +28,7 @@ export default function Home() {
     <>
       <AlertsContainer zone="WAZ558" />
       <CurrentContainer />
+      <AIForecastContainer />
       <HistoryContainer />
       <ForecastContainer wfo="SEW" x="127" y="75" />
       <CameraContainer title="local cameras" camerasProps={camerasProps} />

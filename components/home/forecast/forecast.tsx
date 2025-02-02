@@ -48,7 +48,7 @@ export default async function ForecastContainer({
                 key={period.number}
                 className="bg-base border rounded-lg shadow p-4 mb-4 w-11/12"
               >
-                <h1 className="text-xl">{period.name}</h1>
+                <h1 className="text-xl text-muted-foreground">{period.name}</h1>
                 <Separator className="mt-3 mb-2" />
                 <h2>{period.detailedForecast}</h2>
               </div>
