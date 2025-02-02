@@ -23,6 +23,33 @@ const camerasProps: CameraCardProps[] = [
   },
 ];
 
+const forecastImageProps: CameraCardProps[] = [
+  {
+    id: 1,
+    title: "katx radar",
+    description: "radar image from the katx radar",
+    url: "https://radar.weather.gov/ridge/standard/KATX_loop.gif",
+  },
+  {
+    id: 2,
+    title: "noaa max temp",
+    description: "noaa maximum temperature forecast",
+    url: "https://graphical.weather.gov/GraphicalNDFD.php?width=515&timezone=PST&sector=SEW&element=maxt&n=1",
+  },
+  {
+    id: 3,
+    title: "goes-18 pnw extent3",
+    description: "goes-18 pacific northwest extent3",
+    url: "https://cdn.star.nesdis.noaa.gov/GOES18/GLM/SECTOR/pnw/EXTENT3/GOES18-PNW-EXTENT3-600x600.gif",
+  },
+  {
+    id: 4,
+    title: "goes-18 pnw sandwich",
+    description: "goes-18 pacific northwest sandwich",
+    url: "https://cdn.star.nesdis.noaa.gov/GOES18/ABI/SECTOR/pnw/Sandwich/GOES18-PNW-Sandwich-600x600.gif",
+  },
+];
+
 export default function Home() {
   return (
     <>
@@ -30,6 +57,10 @@ export default function Home() {
       <CurrentContainer />
       <AIForecastContainer />
       <HistoryContainer />
+      <CameraContainer
+        title="forecast images"
+        camerasProps={forecastImageProps}
+      />
       <ForecastContainer wfo="SEW" x="127" y="75" />
       <CameraContainer title="local cameras" camerasProps={camerasProps} />
     </>

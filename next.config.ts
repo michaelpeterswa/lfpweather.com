@@ -8,7 +8,22 @@ const nextConfig: NextConfig = {
           protocol: 'https',
           hostname: 'images.lfpweather.com',
           port: '',
-        }
+        },
+        {
+          protocol: 'https',
+          hostname: 'radar.weather.gov',
+          port: '',
+        },
+        {
+          protocol: 'https',
+          hostname: 'cdn.star.nesdis.noaa.gov',
+          port: '',
+        },
+        {
+          protocol: 'https',
+          hostname: 'graphical.weather.gov',
+          port: '',
+        },
       ],
   },
   output: "standalone",
