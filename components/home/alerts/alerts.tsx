@@ -45,17 +45,41 @@ export default async function AlertsContainer({ zone }: { zone: string }) {
                   new Date(),
                   { addSuffix: true }
                 );
+                const formattedOnset = formatDistance(
+                  Date.parse(alert.properties.onset),
+                  new Date(),
+                  { addSuffix: true }
+                );
+                const formattedEnds = formatDistance(
+                  Date.parse(alert.properties.ends),
+                  new Date(),
+                  { addSuffix: true }
+                );
                 return (
-                  <AccordionItem key={alert.id} value={alert.id}>
+                  <AccordionItem
+                    className="border-b-0"
+                    key={alert.id}
+                    value={alert.id}
+                  >
                     <AccordionTrigger className="hover:no-underline">
                       <div className="flex flex-col justify-start items-start">
                         <h1 className="font-semibold text-xl">
                           {alert.properties.event}
                         </h1>
-                        <h3>expires {formattedExpires}</h3>
+
+                        <h3 className="text-muted-foreground">
+                          ends {formattedEnds}
+                        </h3>
                       </div>
                     </AccordionTrigger>
-                    <AccordionContent>
+                    <AccordionContent className="border-t pt-4 border-red-500">
+                      <h2 className="text-muted-foreground">
+                        starts {formattedOnset}
+                      </h2>
+                      <h2 className="text-muted-foreground">
+                        expires {formattedExpires}
+                      </h2>
+                      <br />
                       <h2>{alert.properties.instruction}</h2>
                       <br />
                       <div className="font-mono">
