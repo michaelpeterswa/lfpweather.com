@@ -4,6 +4,8 @@ import HistoryContainer from "@/components/home/history/history";
 import { CameraCardProps } from "@/components/images/camera/camera";
 import CameraContainer from "@/components/images/camera/camera-container";
 import CurrentContainer from "../components/home/current/current";
+import ForecastContainerSuspense from "../components/home/forecast/forecast-suspense";
+import { Suspense } from "react";
 import AIForecastContainer from "@/components/home/ai-forecast/ai-forecast";
 
 export const dynamic = "force-dynamic";
@@ -55,7 +57,9 @@ export default function Home() {
     <>
       <AlertsContainer zone="WAZ558" />
       <CurrentContainer />
-      <AIForecastContainer />
+      <Suspense fallback={ForecastContainerSuspense()}>
+        <AIForecastContainer />
+      </Suspense>
       <HistoryContainer />
       <CameraContainer
         title="forecast images"
