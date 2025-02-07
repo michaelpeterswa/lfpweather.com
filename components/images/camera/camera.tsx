@@ -24,6 +24,8 @@ export type CameraCardProps = {
 };
 
 export default function CameraCard({ props }: { props: CameraCardProps }) {
+  const unoptimized = props.url.endsWith(".gif") ? true : false;
+
   return (
     <Card className="w-11/12 md:w-5/12">
       <CardHeader>
@@ -39,6 +41,7 @@ export default function CameraCard({ props }: { props: CameraCardProps }) {
             <DialogTrigger asChild>
               <AspectRatio ratio={16 / 9}>
                 <Image
+                  unoptimized={unoptimized}
                   src={props.url}
                   alt={props.title}
                   className=""
