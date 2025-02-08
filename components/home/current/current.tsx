@@ -1,8 +1,6 @@
-import { Suspense } from "react";
 import Container from "../../layout/container/container";
 import Title from "../../layout/container/title";
 import CurrentCard, { CurrentCardProps } from "./current-card";
-import CurrentCardSuspense from "./current-card-suspense";
 
 const currentCards: CurrentCardProps[] = [
   {
@@ -49,9 +47,7 @@ export default function CurrentContainer() {
       <Title title="current conditions" />
       <div className="flex w-full justify-center flex-wrap gap-2 md:gap-4 py-4">
         {currentCards.map((card, i) => (
-          <Suspense key={i} fallback={<CurrentCardSuspense />}>
-            <CurrentCard props={card} />
-          </Suspense>
+          <CurrentCard key={i} props={card} />
         ))}
       </div>
     </Container>
