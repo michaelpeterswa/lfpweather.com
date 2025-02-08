@@ -5,6 +5,10 @@ import { CameraCardProps } from "@/components/images/camera/camera";
 import CameraContainer from "@/components/images/camera/camera-container";
 import CurrentContainer from "../components/home/current/current";
 import AIForecastContainer from "@/components/home/ai-forecast/ai-forecast";
+import CurrentContainerSuspense from "@/components/home/current/current-container-suspense";
+import { Suspense } from "react";
+import AIForecastContainerSuspense from "@/components/home/ai-forecast/ai-forecast-suspense";
+import ForecastContainerSuspense from "@/components/home/forecast/forecast-suspense";
 
 export const dynamic = "force-dynamic";
 
@@ -54,14 +58,26 @@ export default function Home() {
   return (
     <>
       <AlertsContainer zone="WAZ558" />
-      <CurrentContainer />
-      <AIForecastContainer />
+
+      <Suspense fallback={<CurrentContainerSuspense />}>
+        <CurrentContainer />
+      </Suspense>
+
+      <Suspense fallback={<AIForecastContainerSuspense />}>
+        <AIForecastContainer />
+      </Suspense>
+
       <HistoryContainer />
+
       <CameraContainer
         title="forecast images"
         camerasProps={forecastImageProps}
       />
-      <ForecastContainer />
+
+      <Suspense fallback={<ForecastContainerSuspense />}>
+        <ForecastContainer />
+      </Suspense>
+
       <CameraContainer title="local cameras" camerasProps={camerasProps} />
     </>
   );
