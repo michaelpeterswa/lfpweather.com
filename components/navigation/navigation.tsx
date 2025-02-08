@@ -10,8 +10,7 @@ import {
 import { Menu } from "lucide-react";
 import { ModeToggle } from "../theme/mode-toggle";
 import { NavigationLink } from "./link";
-import Favicon32 from "@/public/lfpweather/svg/favicon-32.svg";
-import Main from "@/public/lfpweather/svg/main.svg";
+import Main from "@/public/svg/main.svg";
 
 export default function Navigation() {
   const sheetLinks: NavigationLink[] = [
@@ -33,7 +32,7 @@ export default function Navigation() {
         </SheetTrigger>
         <SheetContent side="left">
           <Link href="/" className="flex items-center gap-2" prefetch={false}>
-            <Favicon32 className="h-10 w-10 mr-2 fill-primary" />
+            <Main className="h-10 w-10 mr-2 fill-primary" />
             <span className="text-lg">lfpweather.com</span>
           </Link>
           <div className="grid gap-4 py-6">
@@ -56,7 +55,7 @@ export default function Navigation() {
           className="flex items-center gap-2 px-2"
           prefetch={false}
         >
-          <Favicon32 className="h-10 w-10 mr-2 fill-primary" />
+          <Main className="h-10 w-10 mr-2 fill-primary" />
           <span className="text-lg text-primary">lfpweather.com</span>
         </Link>
       </div>
