@@ -26,17 +26,6 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://lfpweather.com",
   },
-  icons: [
-    {
-      rel: "apple-touch-icon",
-      url: "https://images.lfpweather.com/public/app-clip.svg",
-    },
-    {
-      rel: "mask-icon",
-      url: "https://images.lfpweather.com/public/app-clip-gradient.svg",
-      color: "#000000",
-    },
-  ],
   appleWebApp: {
     capable: true,
     title: "lfpweather.com",
