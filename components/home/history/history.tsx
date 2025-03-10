@@ -60,6 +60,38 @@ const blocks: blockProps[] = [
       unit: " c/hr",
     },
   },
+  {
+    field: "aqi",
+    lineChartCardConfig: {
+      title: "Air Quality Index",
+      description: "air quality index",
+      unit: "",
+    },
+  },
+  {
+    field: "co2",
+    lineChartCardConfig: {
+      title: "CO2 Concentration",
+      description: "co2 concentration in parts per million",
+      unit: " ppm",
+    },
+  },
+  {
+    field: "tvoc_index",
+    lineChartCardConfig: {
+      title: "TVOC Index",
+      description: "tvoc index",
+      unit: "",
+    },
+  },
+  {
+    field: "nox_index",
+    lineChartCardConfig: {
+      title: "NOx Index",
+      description: "nox index",
+      unit: "",
+    },
+  },
 ];
 
 type blockProps = {
