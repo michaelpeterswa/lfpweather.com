@@ -7,7 +7,7 @@ export default function CurrentContainerSuspense() {
     <Container>
       <Title title="current conditions" />
       <div className="flex w-full justify-center flex-wrap gap-2 md:gap-4 py-4">
-        {[...Array(7)].map((_, index) => (
+        {[...Array(11)].map((_, index) => (
           <CurrentCardSuspense key={index} />
         ))}
       </div>

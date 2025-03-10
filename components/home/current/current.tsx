@@ -39,6 +39,26 @@ const currentCards: CurrentCardProps[] = [
     title: "UV Index",
     unit: "",
   },
+  {
+    field: "aqi",
+    title: "Air Quality Index",
+    unit: "",
+  },
+  {
+    field: "co2",
+    title: "CO2 Concentration",
+    unit: "ppm",
+  },
+  {
+    field: "tvoc_index",
+    title: "TVOC Index",
+    unit: "",
+  },
+  {
+    field: "nox_index",
+    title: "NOx Index",
+    unit: "",
+  },
 ];
 
 export default function CurrentContainer() {
