@@ -9,6 +9,7 @@ import CurrentContainerSuspense from "@/components/home/current/current-containe
 import { Suspense } from "react";
 import AIForecastContainerSuspense from "@/components/home/ai-forecast/ai-forecast-suspense";
 import ForecastContainerSuspense from "@/components/home/forecast/forecast-suspense";
+import ElectricityMapsContainer from "@/components/home/electricitymaps/electricitymaps";
 
 export const dynamic = "force-dynamic";
 
@@ -68,6 +69,8 @@ export default function Home() {
       </Suspense>
 
       <HistoryContainer />
+
+      <ElectricityMapsContainer />
 
       <CameraContainer
         title="forecast images"
