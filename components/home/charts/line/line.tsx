@@ -89,7 +89,12 @@ export function LineChartCard({ config }: { config: LineChartCardConfig }) {
               unit={config.unit}
               width={30}
             />
-            <XAxis dataKey="time" tickLine={true} axisLine={true} />
+            <XAxis
+              dataKey="time"
+              tickLine={true}
+              axisLine={true}
+              unit={config.unit}
+            />
             <ChartTooltip cursor={true} content={<ChartTooltipContent />} />
             <Line
               dataKey="min"
