@@ -30,15 +30,18 @@ export function VBarChartCard({ config }: { config: VBarChartCardConfig }) {
         <CardDescription>{config.description}</CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
+        <ChartContainer config={chartConfig} className="min-h-[400px] w-full">
           <BarChart
             accessibilityLayer
             data={config.chartData}
             layout="vertical"
+            margin={{
+              left: -30,
+            }}
           >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis type="number" unit="MW" tickCount={5} />
-            <YAxis type="category" width={150} dataKey="label" interval={0} />
+            <YAxis type="category" width={125} dataKey="label" interval={0} />
             <Bar
               dataKey="value"
               fill="#64beff"
