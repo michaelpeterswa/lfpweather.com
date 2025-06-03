@@ -56,3 +56,10 @@ export interface ImportExportAdorned {
 export type PowerImportBreakdown = Record<string, ImportExportAdorned>
 
 export type PowerExportBreakdown = Record<string, ImportExportAdorned>
+
+export type ElectricityMapsCardConfig = {
+    title: string
+    value: number
+    unit: string
+    time: string
+}
