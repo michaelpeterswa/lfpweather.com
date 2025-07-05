@@ -10,6 +10,7 @@ import { Suspense } from "react";
 import AIForecastContainerSuspense from "@/components/home/ai-forecast/ai-forecast-suspense";
 import ForecastContainerSuspense from "@/components/home/forecast/forecast-suspense";
 import ElectricityMapsContainer from "@/components/home/electricitymaps/electricitymaps";
+import RaspberryShakeContainer from "@/components/home/raspberryshake/raspberryshake";
 
 export const dynamic = "force-dynamic";
 
@@ -69,6 +70,8 @@ export default function Home() {
       </Suspense>
 
       <HistoryContainer />
+
+      <RaspberryShakeContainer />
 
       <ElectricityMapsContainer />
 
