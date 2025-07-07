@@ -36,11 +36,11 @@ export function VBarChartCard({ config }: { config: VBarChartCardConfig }) {
             data={config.chartData}
             layout="vertical"
             margin={{
-              left: -30,
+              left: -20,
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis type="number" unit="MW" tickCount={5} />
+            <XAxis type="number" unit={config.unit} tickCount={5} />
             <YAxis type="category" width={125} dataKey="label" interval={0} />
             <Bar
               dataKey="value"

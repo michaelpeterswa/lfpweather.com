@@ -11,6 +11,7 @@ import AIForecastContainerSuspense from "@/components/home/ai-forecast/ai-foreca
 import ForecastContainerSuspense from "@/components/home/forecast/forecast-suspense";
 import ElectricityMapsContainer from "@/components/home/electricitymaps/electricitymaps";
 import RaspberryShakeContainer from "@/components/home/raspberryshake/raspberryshake";
+import BirdnetContainer from "@/components/home/birdnet/birdnet";
 
 export const dynamic = "force-dynamic";
 
@@ -70,6 +71,8 @@ export default function Home() {
       </Suspense>
 
       <HistoryContainer />
+
+      <BirdnetContainer />
 
       <RaspberryShakeContainer />
 
