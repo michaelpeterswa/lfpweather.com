@@ -30,7 +30,7 @@ export function VBarChartCard({ config }: { config: VBarChartCardConfig }) {
         <CardDescription>{config.description}</CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig} className="min-h-[400px] w-full">
+        <ChartContainer config={chartConfig} className="h-[400px] w-full !aspect-auto">
           <BarChart
             accessibilityLayer
             data={config.chartData}
