@@ -31,7 +31,7 @@ export default async function BirdnetContainer() {
       title: "BirdNET Species Count",
       description: "Current bird species count",
       unit: " detections",
-      chartData: birdnetCounts.map((bird) => ({
+      chartData: (!birdnetCounts || birdnetCounts.length === 0) ? [] : birdnetCounts.map((bird) => ({
         label: bird.common_name,
         value: bird.count,
       })) as VBarSection[],
