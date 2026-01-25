@@ -60,7 +60,7 @@ const forecastImageProps: CameraCardProps[] = [
 export default function Home() {
   return (
     <>
-      <AlertsContainer zone="WAZ558" />
+      <AlertsContainer zone="WAZ313" />
 
       <Suspense fallback={<CurrentContainerSuspense />}>
         <CurrentContainer />
