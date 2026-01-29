@@ -12,7 +12,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: lts/*
-      - run: npm install --save-dev @commitlint/{config-conventional,cli}
+      - run: npm install --legacy-peer-deps --save-dev @commitlint/{config-conventional,cli}
       - run: npx commitlint --from=${{ github.event.pull_request.base.sha }}
 
   yamllint:
