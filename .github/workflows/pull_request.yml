@@ -12,6 +12,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: lts/*
+      # yamllint disable-line rule:line-length
       - run: npm install --legacy-peer-deps --save-dev @commitlint/{config-conventional,cli}
       - run: npx commitlint --from=${{ github.event.pull_request.base.sha }}
 
