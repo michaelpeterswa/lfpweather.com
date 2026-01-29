@@ -1,5 +1,6 @@
 import { dirname } from "path";
 import { fileURLToPath } from "url";
+import { createRequire } from "module";
 import { FlatCompat } from "@eslint/eslintrc";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -7,7 +8,12 @@ const __dirname = dirname(__filename);
 
 const compat = new FlatCompat({
   baseDirectory: __dirname,
+  resolvePluginsRelativeTo: __dirname,
+  recommendedConfig: {},
+  allConfig: {},
 });
+
+globalThis.require = globalThis.require || createRequire(import.meta.url);
 
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
