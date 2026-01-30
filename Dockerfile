@@ -35,6 +35,9 @@ COPY --from=prerelease /usr/src/app/.next/static ./.next/static
 COPY --from=prerelease /usr/src/app/public ./public
 COPY --from=prerelease /usr/src/app/package.json .
 
+# ensure cache directory is writable by bun user
+RUN mkdir -p .next/cache && chown -R bun:bun .next/cache
+
 # run the app
 USER bun
 
