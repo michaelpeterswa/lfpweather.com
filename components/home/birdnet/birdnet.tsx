@@ -1,8 +1,14 @@
 import Container from "@/components/layout/container/container";
 import Title from "@/components/layout/container/title";
-import { VBarChartCardConfig, VBarSection } from "../charts/vbar/types";
-import { VBarChartCard } from "../charts/vbar/vbar";
 import { BirdnetCounts } from "./types";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 export default async function BirdnetContainer() {
   const res = await fetch(
@@ -18,8 +24,8 @@ export default async function BirdnetContainer() {
   if (res.status !== 200) {
     return (
       <Container isAlert>
-        <Title title="birdnet" />
-        <div className="border-red-500 bg-red-50 dark:bg-red-950 border rounded-lg shadow p-4 mb-4 flex justify-center">
+        <Title title="BirdNET 24h" />
+        <div className="border-destructive bg-red-50 dark:bg-red-950 border rounded-lg p-4 flex justify-center">
           <h1>failed to get bird counts</h1>
         </div>
       </Container>
@@ -27,23 +33,54 @@ export default async function BirdnetContainer() {
   } else {
     const birdnetCounts = (await res.json()) as BirdnetCounts;
 
-    const birdnetVBarConfig: VBarChartCardConfig = {
-      title: "BirdNET Species Count",
-      description: "Current bird species count",
-      unit: " detections",
-      chartData: (!birdnetCounts || birdnetCounts.length === 0) ? [] : birdnetCounts.map((bird) => ({
-        label: bird.common_name,
-        value: bird.count,
-      })) as VBarSection[],
-      footer: `Updated now`,
-    };
+    const sorted = (!birdnetCounts || birdnetCounts.length === 0)
+      ? []
+      : [...birdnetCounts].sort((a, b) => b.count - a.count);
+
+    const maxCount = sorted.length > 0 ? sorted[0].count : 1;
 
     return (
       <Container>
         <Title title="BirdNET 24h" />
-        <div className="flex w-full justify-center flex-wrap gap-2 md:gap-4 py-4">
-          <VBarChartCard config={birdnetVBarConfig} />
-        </div>
+        {sorted.length === 0 ? (
+          <p className="text-sm text-muted-foreground">No detections in the last 24 hours.</p>
+        ) : (
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-8">#</TableHead>
+                <TableHead>Species</TableHead>
+                <TableHead className="text-right w-24">Detections</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {sorted.map((bird, i) => (
+                <TableRow key={bird.common_name}>
+                  <TableCell className="font-mono-data text-xs text-muted-foreground">
+                    {i + 1}
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-3">
+                      <span className="text-sm">{bird.common_name}</span>
+                      <div className="hidden sm:block flex-1 max-w-[120px]">
+                        <div className="h-1.5 rounded-full bg-secondary overflow-hidden">
+                          <div
+                            className="h-full rounded-full bg-accent"
+                            style={{ width: `${(bird.count / maxCount) * 100}%` }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </TableCell>
+                  <TableCell className="text-right font-mono-data text-sm font-semibold">
+                    {bird.count}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}
+        <p className="text-xs text-muted-foreground mt-2">Updated now</p>
       </Container>
     );
   }

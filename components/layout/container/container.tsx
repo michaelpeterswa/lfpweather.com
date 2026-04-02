@@ -7,11 +7,13 @@ export default function Container({
   isAlert?: boolean;
   children: React.ReactNode;
 }) {
-  const baseStyle = "container bg-base border rounded-lg shadow p-4 mb-4";
-  const alertStyle = "border-red-500 bg-red-50 dark:bg-red-950";
-
   return (
-    <div className={isAlert ? cn(baseStyle, alertStyle) : baseStyle}>
+    <div
+      className={cn(
+        "rounded-lg border bg-card p-4 shadow-sm",
+        isAlert && "border-destructive bg-red-50 dark:bg-red-950"
+      )}
+    >
       {children}
     </div>
   );

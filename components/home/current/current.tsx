@@ -30,7 +30,7 @@ const currentCards: CurrentCardProps[] = [
   },
   {
     field: "24h_rain",
-    title: "24 Hour Rain Totals",
+    title: "24h Rain",
     transform: (n: number) => n / 100,
     unit: "in",
   },
@@ -41,22 +41,22 @@ const currentCards: CurrentCardProps[] = [
   },
   {
     field: "aqi",
-    title: "Air Quality Index",
+    title: "AQI",
     unit: "",
   },
   {
     field: "co2",
-    title: "CO2 Concentration",
+    title: "CO2",
     unit: "ppm",
   },
   {
     field: "tvoc_index",
-    title: "TVOC Index",
+    title: "TVOC",
     unit: "",
   },
   {
     field: "nox_index",
-    title: "NOx Index",
+    title: "NOx",
     unit: "",
   },
 ];
@@ -65,7 +65,7 @@ export default function CurrentContainer() {
   return (
     <Container>
       <Title title="current conditions" />
-      <div className="flex w-full justify-center flex-wrap gap-2 md:gap-4 py-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
         {currentCards.map((card, i) => (
           <CurrentCard key={i} props={card} />
         ))}

@@ -10,16 +10,14 @@ export default function CameraContainer({
   camerasProps: CameraCardProps[];
 }) {
   return (
-    <>
-      <Container>
-        <Title title={title} />
-        <div className="flex justify-center flex-wrap gap-2 md:gap-4 py-4">
-          {camerasProps.map(
-            (camera) =>
-              !camera.disabled && <CameraCard key={camera.id} props={camera} />
-          )}
-        </div>
-      </Container>
-    </>
+    <Container>
+      <Title title={title} />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {camerasProps.map(
+          (camera) =>
+            !camera.disabled && <CameraCard key={camera.id} props={camera} />
+        )}
+      </div>
+    </Container>
   );
 }

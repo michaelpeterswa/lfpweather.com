@@ -56,5 +56,5 @@ export default function WeatherIcon({
 }) {
   const Icon = lucideWeatherIconMap[icon] || ShieldQuestion;
 
-  return <Icon className={cn("w-8 h-8", className)} />;
+  return <Icon className={cn("w-8 h-8 text-accent", className)} />;
 }

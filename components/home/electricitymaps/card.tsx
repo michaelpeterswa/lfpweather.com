@@ -1,4 +1,3 @@
-import { Card } from "@/components/ui/card";
 import { ElectricityMapsCardConfig } from "./types";
 
 export default function ElectricityMapsCard({
@@ -7,16 +6,13 @@ export default function ElectricityMapsCard({
   config: ElectricityMapsCardConfig;
 }) {
   return (
-    <>
-      <Card className="w-11/12 md:w-1/4">
-        <div className="flex flex-col justify-between items-center py-2">
-          <h2 className="text-muted-foreground">{config.title}</h2>
-          <h1 className="text-xl font-semibold">
-            {config.value} {config.unit}
-          </h1>
-          <h3 className="text-muted-foreground text-sm">{config.time}</h3>
-        </div>
-      </Card>
-    </>
+    <div className="rounded-lg border bg-secondary/50 p-3">
+      <p className="text-xs text-muted-foreground">{config.title}</p>
+      <p className="font-mono-data text-lg font-bold tracking-tight mt-0.5">
+        {config.value}
+        <span className="text-sm font-normal text-muted-foreground ml-1">{config.unit}</span>
+      </p>
+      <p className="text-[10px] text-muted-foreground mt-0.5">{config.time}</p>
+    </div>
   );
 }

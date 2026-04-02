@@ -4,17 +4,15 @@ import Link from "next/link";
 export default function Title({ title }: { title: string }) {
   const linkName = stripNonAlphanumeric(title.replace(" ", "-")).toLowerCase();
   return (
-    <>
-      <div
-        className="flex justify-center items-baseline gap-2 w-full mb-4"
-        id={linkName}
-      >
-        <h1 className="text-3xl lg:text-4xl">{title}</h1>
-        <Link href={`#${linkName}`} scroll={false}>
-          <LinkIcon className="h-3 w-3 text-gray-600" />
-        </Link>
-      </div>
-    </>
+    <div
+      className="flex items-baseline gap-2 mb-4 border-l-2 border-accent pl-3"
+      id={linkName}
+    >
+      <h1 className="text-2xl lg:text-3xl font-bold tracking-tight">{title}</h1>
+      <Link href={`#${linkName}`} scroll={false}>
+        <LinkIcon className="h-3 w-3 text-muted-foreground hover:text-accent transition-colors" />
+      </Link>
+    </div>
   );
 }
 

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Footer from "@/components/footer/footer";
 import { ThemeProvider } from "@/components/theme/theme-provider";
-import { funneldisplay } from "./fonts";
+import { bricolage, redhatmono } from "./fonts";
 import { cn } from "@/lib/utils";
 import Navigation from "@/components/navigation/navigation";
 import { GoogleAnalytics } from "@next/third-parties/google";
@@ -10,8 +10,8 @@ import type { Viewport } from "next";
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
+    { media: "(prefers-color-scheme: light)", color: "#f9f7f3" },
+    { media: "(prefers-color-scheme: dark)", color: "#0c140f" },
   ],
 };
 
@@ -43,17 +43,25 @@ export default function RootLayout({
       <head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </head>
-      <body className={cn("", funneldisplay.className)}>
+      <body
+        className={cn(
+          "min-h-screen",
+          bricolage.variable,
+          redhatmono.variable,
+          bricolage.className
+        )}
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          <div className="flex flex-col items-center justify-center px-4 min-h-screen">
+          <div className="flex flex-col min-h-screen">
             <Navigation />
-            {children}
-            <div className="grow" />
+            <main className="flex-1 w-full max-w-7xl mx-auto px-4 py-6">
+              {children}
+            </main>
             <Footer />
           </div>
         </ThemeProvider>

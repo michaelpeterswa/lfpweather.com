@@ -59,35 +59,45 @@ const forecastImageProps: CameraCardProps[] = [
 
 export default function Home() {
   return (
-    <>
+    <div className="space-y-6">
+      {/* Alerts - full width */}
       <AlertsContainer zone="WAZ313" />
 
+      {/* Current Conditions - hero grid */}
       <Suspense fallback={<CurrentContainerSuspense />}>
         <CurrentContainer />
       </Suspense>
 
+      {/* AI Forecast */}
       <Suspense fallback={<AIForecastContainerSuspense />}>
         <AIForecastContainer />
       </Suspense>
 
+      {/* 7-Day History Charts */}
       <HistoryContainer />
 
-      <BirdnetContainer />
+      {/* BirdNET + Seismology side by side */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <BirdnetContainer />
+        <RaspberryShakeContainer />
+      </div>
 
-      <RaspberryShakeContainer />
-
+      {/* Power Breakdown */}
       <ElectricityMapsContainer />
 
+      {/* Forecast Images */}
       <CameraContainer
         title="forecast images"
         camerasProps={forecastImageProps}
       />
 
+      {/* NWS Detailed Forecast */}
       <Suspense fallback={<ForecastContainerSuspense />}>
         <ForecastContainer />
       </Suspense>
 
+      {/* Local Cameras */}
       <CameraContainer title="local cameras" camerasProps={camerasProps} />
-    </>
+    </div>
   );
 }

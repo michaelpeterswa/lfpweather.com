@@ -19,15 +19,14 @@ import { VBarChartCardConfig } from "./types";
 const chartConfig = {} satisfies ChartConfig;
 
 export function VBarChartCard({ config }: { config: VBarChartCardConfig }) {
-  // sort config.chartData by value descending
   if (config.chartData) {
     config.chartData.sort((a, b) => b.value - a.value);
   }
   return (
-    <Card className="w-full md:w-5/12">
-      <CardHeader>
-        <CardTitle className="tracking-widest">{config.title}</CardTitle>
-        <CardDescription>{config.description}</CardDescription>
+    <Card className="w-full">
+      <CardHeader className="pb-2">
+        <CardTitle className="text-sm font-semibold tracking-wide">{config.title}</CardTitle>
+        <CardDescription className="text-xs">{config.description}</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="h-[400px] w-full !aspect-auto">
@@ -39,22 +38,22 @@ export function VBarChartCard({ config }: { config: VBarChartCardConfig }) {
               left: -20,
             }}
           >
-            <CartesianGrid strokeDasharray="3 3" />
+            <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.3} />
             <XAxis type="number" unit={config.unit} tickCount={5} />
             <YAxis type="category" width={125} dataKey="label" interval={0} />
             <Bar
               dataKey="value"
-              fill="#64beff"
-              stroke="#00000033"
+              fill="hsl(var(--chart-1))"
+              stroke="hsl(var(--border))"
               radius={[2, 5, 5, 2]}
             />
             <Tooltip content={<ChartTooltipContent />} />
           </BarChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col items-start gap-2 text-sm">
+      <CardFooter className="flex-col items-start gap-2 text-sm pt-0">
         {config.footer && (
-          <div className="text-muted-foreground">{config.footer}</div>
+          <div className="text-muted-foreground text-xs">{config.footer}</div>
         )}
       </CardFooter>
     </Card>

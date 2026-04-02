@@ -27,13 +27,13 @@ export default function CameraCard({ props }: { props: CameraCardProps }) {
   const unoptimized = props.url.endsWith(".gif") ? true : false;
 
   return (
-    <Card className="w-11/12 md:w-5/12">
-      <CardHeader>
-        <CardTitle>{props.title}</CardTitle>
-        <CardDescription>{props.description}</CardDescription>
+    <Card className="w-full">
+      <CardHeader className="pb-2">
+        <CardTitle className="text-sm font-semibold">{props.title}</CardTitle>
+        <CardDescription className="text-xs">{props.description}</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="rounded-lg overflow-clip border shadow">
+        <div className="rounded-lg overflow-clip border">
           <Dialog>
             <VisuallyHidden>
               <DialogTitle>{props.title}</DialogTitle>

@@ -22,9 +22,9 @@ export default async function ElectricityMapsContainer() {
   if (res.status !== 200) {
     return (
       <Container isAlert>
-        <Title title="forecast" />
-        <div className="border-red-500 bg-red-50 dark:bg-red-950 border rounded-lg shadow p-4 mb-4 flex justify-center">
-          <h1>failed to get forecast</h1>
+        <Title title="power breakdown" />
+        <div className="border-destructive bg-red-50 dark:bg-red-950 border rounded-lg p-4 flex justify-center">
+          <h1>failed to get power breakdown</h1>
         </div>
       </Container>
     );
@@ -93,7 +93,6 @@ export default async function ElectricityMapsContainer() {
         footer: `Last updated ${relativeDate}`,
       };
 
-      // production vbar config
       const productionVBarConfig: VBarChartCardConfig = {
         title: "Power Production Breakdown",
         description: "Current power production breakdown by source",
@@ -193,7 +192,7 @@ export default async function ElectricityMapsContainer() {
       return (
         <Container>
           <Title title="power breakdown" />
-          <div className="flex w-full justify-center flex-wrap gap-2 md:gap-4 py-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 mb-4">
             <ElectricityMapsCard
               config={{
                 title: "Consumption Total",
@@ -228,7 +227,7 @@ export default async function ElectricityMapsContainer() {
             />
             <ElectricityMapsCard
               config={{
-                title: "Fossil Free Percentage",
+                title: "Fossil Free",
                 value: powerBreakdown.fossilFreePercentage,
                 unit: "%",
                 time: `Last updated ${relativeDate}`,
@@ -236,14 +235,14 @@ export default async function ElectricityMapsContainer() {
             />
             <ElectricityMapsCard
               config={{
-                title: "Renewable Percentage",
+                title: "Renewable",
                 value: powerBreakdown.renewablePercentage,
                 unit: "%",
                 time: `Last updated ${relativeDate}`,
               }}
             />
           </div>
-          <div className="flex w-full justify-center flex-wrap gap-2 md:gap-4 py-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <VBarChartCard config={consumptionVBarConfig} />
             <VBarChartCard config={productionVBarConfig} />
             <VBarChartCard config={powerImportVBarConfig} />

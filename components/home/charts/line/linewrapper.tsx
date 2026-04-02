@@ -31,17 +31,17 @@ export default async function LineWrapper({
 
   if (res.status !== 200) {
     return (
-      <Card className="w-full md:w-5/12">
-        <CardHeader>
-          <CardTitle className="tracking-widest">
+      <Card className="w-full">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-sm font-semibold tracking-wide">
             {lineChartCardConfig.title}
           </CardTitle>
-          <CardDescription>{lineChartCardConfig.description}</CardDescription>
+          <CardDescription className="text-xs">{lineChartCardConfig.description}</CardDescription>
         </CardHeader>
-        <CardContent className="bg-red-50 border-red-500 border rounded-lg shadow p-4 m-4">
+        <CardContent className="bg-red-50 dark:bg-red-950 border-destructive border rounded-lg p-4 m-4">
           <div className="flex flex-col items-center">
-            <CloudLightning size={48} className="text-red-500 flex-grow" />
-            <h1 className="text-red-500 flex-none">failed to get {field}</h1>
+            <CloudLightning size={48} className="text-destructive flex-grow" />
+            <h1 className="text-destructive flex-none">failed to get {field}</h1>
           </div>
         </CardContent>
       </Card>

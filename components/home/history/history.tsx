@@ -117,7 +117,7 @@ function HistoryBlock({
   return (
     <>
       <Title title={title} />
-      <div className="flex w-full justify-center flex-wrap gap-2 md:gap-4 py-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {blocks.map((block) => (
           <LineWrapper
             key={block.field}

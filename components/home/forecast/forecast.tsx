@@ -20,8 +20,8 @@ export default async function ForecastContainer() {
   if (res.status !== 200) {
     return (
       <Container isAlert>
-        <Title title="forecast" />
-        <div className="border-red-500 bg-red-50 dark:bg-red-950 border rounded-lg shadow p-4 mb-4 flex justify-center">
+        <Title title="nws forecast" />
+        <div className="border-destructive bg-red-50 dark:bg-red-950 border rounded-lg p-4 flex justify-center">
           <h1>failed to get forecast</h1>
         </div>
       </Container>
@@ -33,32 +33,29 @@ export default async function ForecastContainer() {
       return (
         <Container>
           <Title title="nws forecast" />
-          <div className="flex flex-col justify-center items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {forecast.periods.map((period) => (
               <div
                 key={period.name}
-                className="bg-base border rounded-lg shadow p-4 mb-4 w-11/12"
+                className="rounded-lg border bg-secondary/30 p-4"
               >
-                <h1 className="text-xl text-muted-foreground">{period.name}</h1>
-                <Separator className="mt-3 mb-2" />
-                <div className="flex flex-row items-center">
-                  <div className="px-4">
-                    <WeatherIcon icon={period.icon} className="h-8 w-8" />
-                  </div>
-                  <div className="flex flex-col grow space-y-1">
-                    <h3>{period.short_forecast}</h3>
-                    <h3>
+                <h3 className="text-sm font-semibold text-muted-foreground">{period.name}</h3>
+                <Separator className="my-2" />
+                <div className="flex items-center gap-3">
+                  <WeatherIcon icon={period.icon} className="h-7 w-7 shrink-0" />
+                  <div className="space-y-0.5 min-w-0">
+                    <p className="text-sm">{period.short_forecast}</p>
+                    <p className="font-mono-data text-sm font-semibold">
                       {period.time_of_day == "day" ? "High:" : "Low:"}{" "}
                       {period.temperature}°F
-                    </h3>
-                    <h3>
-                      {period.wind_speed} {period.wind_direction} -&nbsp;
-                      {period.beaufort.toLowerCase()}
-                    </h3>
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      {period.wind_speed} {period.wind_direction} — {period.beaufort.toLowerCase()}
+                    </p>
                   </div>
                 </div>
-                <Separator className="mt-3 mb-2" />
-                <h2 className="">{period.detailed_forecast}</h2>
+                <Separator className="my-2" />
+                <p className="text-xs leading-relaxed text-muted-foreground">{period.detailed_forecast}</p>
               </div>
             ))}
           </div>

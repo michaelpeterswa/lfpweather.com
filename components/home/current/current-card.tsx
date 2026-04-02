@@ -1,5 +1,4 @@
 import { formatDistance } from "date-fns";
-import { Card } from "../../ui/card";
 import { LastResponse } from "./types";
 
 export type CurrentCardProps = {
@@ -26,13 +25,10 @@ export default async function CurrentCard({
   );
   if (res.status !== 200) {
     return (
-      <Card className="w-11/12 md:w-1/4 border-red-500 bg-red-50">
-        <div className="flex flex-col justify-between items-center py-2">
-          <h2>{props.title}</h2>
-          <h1 className="text-xl font-semibold">error</h1>
-          <h3>failed to get data</h3>
-        </div>
-      </Card>
+      <div className="rounded-lg border border-destructive bg-red-50 dark:bg-red-950 p-3">
+        <p className="text-xs text-muted-foreground">{props.title}</p>
+        <p className="font-mono-data text-sm font-semibold text-destructive">error</p>
+      </div>
     );
   } else {
     const lastData = (await res.json()) as LastResponse;
@@ -51,15 +47,14 @@ export default async function CurrentCard({
     );
 
     return (
-      <Card className="w-11/12 md:w-1/4">
-        <div className="flex flex-col justify-between items-center py-2">
-          <h2 className="text-muted-foreground">{props.title}</h2>
-          <h1 className="text-xl font-semibold">
-            {lastDataLast} {props.unit}
-          </h1>
-          <h3 className="text-muted-foreground text-sm">{formattedTime}</h3>
-        </div>
-      </Card>
+      <div className="rounded-lg border bg-secondary/50 p-3 hover:bg-secondary/80 transition-colors">
+        <p className="text-xs text-muted-foreground truncate">{props.title}</p>
+        <p className="font-mono-data text-xl font-bold tracking-tight mt-0.5">
+          {lastDataLast}
+          <span className="text-sm font-normal text-muted-foreground ml-1">{props.unit}</span>
+        </p>
+        <p className="text-[10px] text-muted-foreground mt-0.5">{formattedTime}</p>
+      </div>
     );
   }
 }

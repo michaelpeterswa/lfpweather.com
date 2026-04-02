@@ -39,7 +39,6 @@ export function LineChartCard({ config }: { config: LineChartCardConfig }) {
       section.time = new Date(tmpDate).toLocaleString();
     }
 
-    // replace with at some point: https://www.npmjs.com/package/regression
     const firstPoint = config.chartData[0];
     const lastPoint = config.chartData[config.chartData.length - 1];
 
@@ -66,10 +65,10 @@ export function LineChartCard({ config }: { config: LineChartCardConfig }) {
   }
 
   return (
-    <Card className="w-full md:w-5/12">
-      <CardHeader>
-        <CardTitle className="tracking-widest">{config.title}</CardTitle>
-        <CardDescription>{config.description}</CardDescription>
+    <Card className="w-full">
+      <CardHeader className="pb-2">
+        <CardTitle className="text-sm font-semibold tracking-wide">{config.title}</CardTitle>
+        <CardDescription className="text-xs">{config.description}</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
@@ -81,7 +80,7 @@ export function LineChartCard({ config }: { config: LineChartCardConfig }) {
               right: 12,
             }}
           >
-            <CartesianGrid vertical={false} />
+            <CartesianGrid vertical={false} strokeOpacity={0.3} />
             <YAxis
               domain={["auto", "auto"]}
               tickCount={3}
@@ -99,30 +98,32 @@ export function LineChartCard({ config }: { config: LineChartCardConfig }) {
             <Line
               dataKey="min"
               type="monotone"
-              stroke="#64beff44"
-              strokeWidth={2}
+              stroke="hsl(var(--chart-2))"
+              strokeWidth={1.5}
+              strokeOpacity={0.3}
               dot={false}
             />
             <Line
               dataKey="avg"
               type="monotone"
-              stroke="#64beff"
+              stroke="hsl(var(--chart-1))"
               strokeWidth={2}
               dot={false}
             />
             <Line
               dataKey="max"
               type="monotone"
-              stroke="#64beff44"
-              strokeWidth={2}
+              stroke="hsl(var(--chart-2))"
+              strokeWidth={1.5}
+              strokeOpacity={0.3}
               dot={false}
             />
           </LineChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col items-start gap-2 text-sm">
+      <CardFooter className="flex-col items-start gap-1 text-sm pt-0">
         {config.trend && <TrendContents trend={config.trend} />}
-        <div className="leading-none text-muted-foreground">
+        <div className="leading-none text-muted-foreground text-xs">
           {config.footer}
         </div>
       </CardFooter>
@@ -133,20 +134,20 @@ export function LineChartCard({ config }: { config: LineChartCardConfig }) {
 function TrendContents({ trend }: { trend: Trend }) {
   if (trend.direction === TrendDirection.Up) {
     return (
-      <div className="flex gap-2 font-medium leading-none">
-        Trending up by {trend.percentage}% <TrendingUp className="h-4 w-4" />
+      <div className="flex gap-2 font-medium leading-none text-xs">
+        Trending up by {trend.percentage}% <TrendingUp className="h-3.5 w-3.5 text-accent" />
       </div>
     );
   } else if (trend.direction === TrendDirection.Down) {
     return (
-      <div className="flex gap-2 font-medium leading-none">
+      <div className="flex gap-2 font-medium leading-none text-xs">
         Trending down by {trend.percentage}%{" "}
-        <TrendingDown className="h-4 w-4" />
+        <TrendingDown className="h-3.5 w-3.5 text-accent" />
       </div>
     );
   } else {
     return (
-      <div className="flex gap-2 font-medium leading-none">Trending flat</div>
+      <div className="flex gap-2 font-medium leading-none text-xs">Trending flat</div>
     );
   }
 }
