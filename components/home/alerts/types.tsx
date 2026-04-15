@@ -29,9 +29,9 @@ export interface Properties {
   //   references: any[];
   sent: string;
   effective: string;
-  onset: string;
-  expires: string;
-  ends: string;
+  onset: string | null;
+  expires: string | null;
+  ends: string | null;
   status: string;
   messageType: string;
   category: string;

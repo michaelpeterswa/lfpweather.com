@@ -39,21 +39,19 @@ export default async function AlertsContainer({ zone }: { zone: string }) {
           <Title title="nws alerts" />
           <Accordion type="single" collapsible>
             {alerts.features.map((alert) => {
-              const formattedExpires = formatDistance(
-                Date.parse(alert.properties.expires),
-                new Date(),
-                { addSuffix: true }
+              const safeFormatDistance = (value: string | null) => {
+                if (!value) return null;
+                const parsed = Date.parse(value);
+                if (Number.isNaN(parsed)) return null;
+                return formatDistance(parsed, new Date(), { addSuffix: true });
+              };
+              const formattedExpires = safeFormatDistance(
+                alert.properties.expires
               );
-              const formattedOnset = formatDistance(
-                Date.parse(alert.properties.onset),
-                new Date(),
-                { addSuffix: true }
+              const formattedOnset = safeFormatDistance(
+                alert.properties.onset
               );
-              const formattedEnds = formatDistance(
-                Date.parse(alert.properties.ends),
-                new Date(),
-                { addSuffix: true }
-              );
+              const formattedEnds = safeFormatDistance(alert.properties.ends);
               return (
                 <AccordionItem
                   className="border-b-0"
@@ -65,18 +63,24 @@ export default async function AlertsContainer({ zone }: { zone: string }) {
                       <h1 className="font-semibold text-lg">
                         {alert.properties.event}
                       </h1>
-                      <h3 className="text-sm text-muted-foreground">
-                        ends {formattedEnds}
-                      </h3>
+                      {formattedEnds && (
+                        <h3 className="text-sm text-muted-foreground">
+                          ends {formattedEnds}
+                        </h3>
+                      )}
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="border-t pt-4 border-destructive">
-                    <p className="text-sm text-muted-foreground">
-                      starts {formattedOnset}
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      expires {formattedExpires}
-                    </p>
+                    {formattedOnset && (
+                      <p className="text-sm text-muted-foreground">
+                        starts {formattedOnset}
+                      </p>
+                    )}
+                    {formattedExpires && (
+                      <p className="text-sm text-muted-foreground">
+                        expires {formattedExpires}
+                      </p>
+                    )}
                     <br />
                     <p className="text-sm">{alert.properties.instruction}</p>
                     <br />
