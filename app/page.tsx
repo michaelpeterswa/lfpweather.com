@@ -12,6 +12,7 @@ import ForecastContainerSuspense from "@/components/home/forecast/forecast-suspe
 import ElectricityMapsContainer from "@/components/home/electricitymaps/electricitymaps";
 import RaspberryShakeContainer from "@/components/home/raspberryshake/raspberryshake";
 import BirdnetContainer from "@/components/home/birdnet/birdnet";
+import SolarContainer from "@/components/home/solar/solar";
 
 export const dynamic = "force-dynamic";
 
@@ -84,6 +85,9 @@ export default function Home() {
 
       {/* Power Breakdown */}
       <ElectricityMapsContainer />
+
+      {/* Solar Power & Batteries */}
+      <SolarContainer />
 
       {/* Forecast Images */}
       <CameraContainer
