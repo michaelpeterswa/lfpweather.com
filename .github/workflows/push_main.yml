@@ -19,10 +19,12 @@ jobs:
         with:
           node-version: lts/*
 
-      - name: Install Semantic Release Plugins
-        run: npm install --legacy-peer-deps conventional-changelog-conventionalcommits@6 # yamllint disable-line rule:line-length
+      - name: Install Semantic Release and Plugins
+        run: | # yamllint disable-line rule:line-length
+          mkdir -p /tmp/semantic-release
+          cd /tmp/semantic-release && npm install --legacy-peer-deps semantic-release@22.0.12 conventional-changelog-conventionalcommits@6
 
       - name: Release Version
         env:
           GITHUB_TOKEN: ${{ secrets.GH_RELEASE_PAT }}
-        run: npx semantic-release@22.0.12
+        run: /tmp/semantic-release/node_modules/.bin/semantic-release
