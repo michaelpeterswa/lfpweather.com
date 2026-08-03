@@ -3,7 +3,7 @@ import Title from "@/components/layout/container/title";
 import { GetPowerBreakdownResponse } from "./types";
 import { VBarChartCardConfig, VBarSection } from "../charts/vbar/types";
 import { VBarChartCard } from "../charts/vbar/vbar";
-import { formatRelative } from "date-fns";
+import { formatDistance } from "date-fns";
 import ElectricityMapsCard from "./card";
 
 export default async function ElectricityMapsContainer() {
@@ -32,8 +32,22 @@ export default async function ElectricityMapsContainer() {
     const powerBreakdown = (await res.json()) as GetPowerBreakdownResponse;
 
     if (powerBreakdown) {
-      const updatedAtLocal = new Date(powerBreakdown.updatedAt);
-      const relativeDate = formatRelative(updatedAtLocal, new Date());
+      // This is a server component, so anything formatted here is formatted in
+      // the container's timezone, which is UTC. `formatRelative` produced
+      // wall-clock wording -- "today at 3:49 PM" for a reading taken at
+      // 8:49 AM local, six and a half hours in the reader's future -- and
+      // nothing corrected it afterwards, because a server component renders
+      // once and is never re-rendered in the browser.
+      //
+      // `formatDistance` returns an elapsed time rather than a clock reading.
+      // It is the same string in every timezone, which makes it correct here
+      // by construction and matches how the current-conditions tiles already
+      // report their age.
+      const relativeDate = formatDistance(
+        new Date(powerBreakdown.updatedAt),
+        new Date(),
+        { addSuffix: true }
+      );
 
       const consumptionVBarConfig: VBarChartCardConfig = {
         title: "Power Consumption Breakdown",
