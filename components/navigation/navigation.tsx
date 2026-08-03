@@ -44,11 +44,11 @@ export default function Navigation() {
     { id: 11, title: "fire", href: "#fire-weather", icon: <Flame className="h-3.5 w-3.5" /> },
     { id: 4, title: "birds", href: "#birdnet-24h", icon: <Bird className="h-3.5 w-3.5" /> },
     { id: 5, title: "seismic", href: "#seismology", icon: <Activity className="h-3.5 w-3.5" /> },
-    { id: 6, title: "power", href: "#power-breakdown", icon: <Zap className="h-3.5 w-3.5" /> },
     { id: 10, title: "solar", href: "#solar-batteries", icon: <BatteryCharging className="h-3.5 w-3.5" /> },
     { id: 7, title: "images", href: "#forecast-images", icon: <ImageIcon className="h-3.5 w-3.5" /> },
     { id: 8, title: "forecast", href: "#nws-forecast", icon: <CloudSun className="h-3.5 w-3.5" /> },
     { id: 9, title: "cameras", href: "#local-cameras", icon: <Camera className="h-3.5 w-3.5" /> },
+    { id: 6, title: "power", href: "#power-breakdown", icon: <Zap className="h-3.5 w-3.5" /> },
   ];
 
   return (

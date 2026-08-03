@@ -90,9 +90,6 @@ export default function Home() {
         <RaspberryShakeContainer />
       </div>
 
-      {/* Power Breakdown */}
-      <ElectricityMapsContainer />
-
       {/* Solar Power & Batteries */}
       <SolarContainer />
 
@@ -109,6 +106,9 @@ export default function Home() {
 
       {/* Local Cameras */}
       <CameraContainer title="local cameras" camerasProps={camerasProps} />
+
+      {/* Power Breakdown */}
+      <ElectricityMapsContainer />
     </div>
   );
 }
