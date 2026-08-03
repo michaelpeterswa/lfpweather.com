@@ -20,9 +20,11 @@ jobs:
           node-version: lts/*
 
       - name: Install Semantic Release and Plugins
-        run: | # yamllint disable-line rule:line-length
+        run: |
           mkdir -p /tmp/semantic-release
-          cd /tmp/semantic-release && npm install --legacy-peer-deps semantic-release@22.0.12 conventional-changelog-conventionalcommits@6
+          cd /tmp/semantic-release && npm install --legacy-peer-deps \
+            semantic-release@22.0.12 \
+            conventional-changelog-conventionalcommits@6
 
       - name: Release Version
         env:
