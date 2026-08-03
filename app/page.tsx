@@ -13,6 +13,8 @@ import ElectricityMapsContainer from "@/components/home/electricitymaps/electric
 import RaspberryShakeContainer from "@/components/home/raspberryshake/raspberryshake";
 import BirdnetContainer from "@/components/home/birdnet/birdnet";
 import SolarContainer from "@/components/home/solar/solar";
+import FireWeatherContainer from "@/components/home/fireweather/fireweather";
+import FireWeatherContainerSuspense from "@/components/home/fireweather/fireweather-suspense";
 
 export const dynamic = "force-dynamic";
 
@@ -76,6 +78,11 @@ export default function Home() {
 
       {/* 7-Day History Charts */}
       <HistoryContainer />
+
+      {/* Fire Weather - danger rating + ERC trend */}
+      <Suspense fallback={<FireWeatherContainerSuspense />}>
+        <FireWeatherContainer />
+      </Suspense>
 
       {/* BirdNET + Seismology side by side */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

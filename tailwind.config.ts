@@ -49,6 +49,13 @@ export default {
   				'3': 'hsl(var(--chart-3))',
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
+  			},
+  			fire: {
+  				'0': 'hsl(var(--fire-0))',
+  				'1': 'hsl(var(--fire-1))',
+  				'2': 'hsl(var(--fire-2))',
+  				'3': 'hsl(var(--fire-3))',
+  				'4': 'hsl(var(--fire-4))'
   			}
   		},
   		borderRadius: {

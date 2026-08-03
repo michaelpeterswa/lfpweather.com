@@ -32,6 +32,13 @@ body {
     --chart-3: 170 40% 38%;
     --chart-4: 25 75% 52%;
     --chart-5: 85 45% 42%;
+    /* Fire danger scale, low (green) to extreme (red). Indexed 0..4 to match
+       the NFDRS adjective class level. */
+    --fire-0: 145 50% 40%;
+    --fire-1: 45 90% 45%;
+    --fire-2: 30 90% 50%;
+    --fire-3: 14 85% 52%;
+    --fire-4: 0 78% 50%;
     --radius: 0.5rem;
   }
   .dark {
@@ -59,6 +66,11 @@ body {
     --chart-3: 170 50% 50%;
     --chart-4: 25 80% 62%;
     --chart-5: 85 50% 55%;
+    --fire-0: 140 45% 55%;
+    --fire-1: 45 85% 60%;
+    --fire-2: 30 88% 60%;
+    --fire-3: 14 85% 62%;
+    --fire-4: 0 80% 62%;
   }
 }
 

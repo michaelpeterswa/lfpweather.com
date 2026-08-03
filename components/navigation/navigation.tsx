@@ -19,6 +19,7 @@ import {
   ImageIcon,
   CloudSun,
   Camera,
+  Flame,
 } from "lucide-react";
 import { ModeToggle } from "../theme/mode-toggle";
 import { NavigationLink } from "./link";
@@ -40,6 +41,7 @@ export default function Navigation() {
     { id: 1, title: "now", href: "#current-conditions", icon: <Thermometer className="h-3.5 w-3.5" /> },
     { id: 2, title: "ai", href: "#ai-forecast", icon: <BrainCircuit className="h-3.5 w-3.5" /> },
     { id: 3, title: "7d", href: "#7-day-history", icon: <BarChart3 className="h-3.5 w-3.5" /> },
+    { id: 11, title: "fire", href: "#fire-weather", icon: <Flame className="h-3.5 w-3.5" /> },
     { id: 4, title: "birds", href: "#birdnet-24h", icon: <Bird className="h-3.5 w-3.5" /> },
     { id: 5, title: "seismic", href: "#seismology", icon: <Activity className="h-3.5 w-3.5" /> },
     { id: 6, title: "power", href: "#power-breakdown", icon: <Zap className="h-3.5 w-3.5" /> },
