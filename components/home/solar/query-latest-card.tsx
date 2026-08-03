@@ -9,7 +9,12 @@ export type SolarLatestCardProps = {
 };
 
 // SolarLatestCard is the /api/v1/query analog of CurrentCard: it asks for the
-// last value in a coarse bucket and renders the same compact tile.
+// last value in a bucket and renders the same compact tile.
+//
+// Unlike CurrentCard it cannot use a /last endpoint, because those exist only
+// for a fixed set of weather metrics and none of the power ones. It therefore
+// reads the last point of a bucketed series, which is why the bucket size
+// matters to the timestamp and not just to the value.
 export default async function SolarLatestCard({
   props,
 }: {
@@ -23,8 +28,17 @@ export default async function SolarLatestCard({
     },
     body: JSON.stringify({
       metric: props.metric,
-      range: "7d",
-      bucket: "1d",
+      // The bucket size sets how wrong the timestamp can be, because a point's
+      // `time` is the START of its bucket rather than the moment of the
+      // reading. With a 1d bucket the card said "about 7 hours ago" for a
+      // value seconds old at 07:07 UTC, and drifted further as the day went on
+      // -- it was reporting the distance to midnight.
+      //
+      // 5m is the finest bucket the API offers, so the displayed age is now
+      // correct to within five minutes. 24h of range keeps the tile working
+      // across an overnight gap while asking for 288 points instead of 2016.
+      range: "24h",
+      bucket: "5m",
       aggregations: ["last"],
     }),
   });
