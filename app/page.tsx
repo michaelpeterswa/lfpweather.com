@@ -15,6 +15,10 @@ import BirdnetContainer from "@/components/home/birdnet/birdnet";
 import SolarContainer from "@/components/home/solar/solar";
 import FireWeatherContainer from "@/components/home/fireweather/fireweather";
 import FireWeatherContainerSuspense from "@/components/home/fireweather/fireweather-suspense";
+import GDDContainer from "@/components/home/gdd/gdd";
+import GDDContainerSuspense from "@/components/home/gdd/gdd-suspense";
+import BarometerContainer from "@/components/home/barometer/barometer";
+import BarometerContainerSuspense from "@/components/home/barometer/barometer-suspense";
 
 export const dynamic = "force-dynamic";
 
@@ -76,12 +80,22 @@ export default function Home() {
         <AIForecastContainer />
       </Suspense>
 
+      {/* Barometer forecast (Zambretti) */}
+      <Suspense fallback={<BarometerContainerSuspense />}>
+        <BarometerContainer />
+      </Suspense>
+
       {/* 7-Day History Charts */}
       <HistoryContainer />
 
       {/* Fire Weather - danger rating + ERC trend */}
       <Suspense fallback={<FireWeatherContainerSuspense />}>
         <FireWeatherContainer />
+      </Suspense>
+
+      {/* Growing Degree Days */}
+      <Suspense fallback={<GDDContainerSuspense />}>
+        <GDDContainer />
       </Suspense>
 
       {/* BirdNET + Seismology side by side */}
