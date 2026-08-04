@@ -8,6 +8,8 @@ import AIForecastContainer from "@/components/home/ai-forecast/ai-forecast";
 import CurrentContainerSuspense from "@/components/home/current/current-container-suspense";
 import { Suspense } from "react";
 import AIForecastContainerSuspense from "@/components/home/ai-forecast/ai-forecast-suspense";
+import AIInsightsContainer from "@/components/home/ai-insights/ai-insights";
+import AIInsightsContainerSuspense from "@/components/home/ai-insights/ai-insights-suspense";
 import ForecastContainerSuspense from "@/components/home/forecast/forecast-suspense";
 import ElectricityMapsContainer from "@/components/home/electricitymaps/electricitymaps";
 import RaspberryShakeContainer from "@/components/home/raspberryshake/raspberryshake";
@@ -82,6 +84,11 @@ export default function Home() {
       {/* AI Forecast */}
       <Suspense fallback={<AIForecastContainerSuspense />}>
         <AIForecastContainer />
+      </Suspense>
+
+      {/* AI Insights - current conditions, smoke outlook, fire weather */}
+      <Suspense fallback={<AIInsightsContainerSuspense />}>
+        <AIInsightsContainer />
       </Suspense>
 
       {/* Barometer forecast (Zambretti) */}
