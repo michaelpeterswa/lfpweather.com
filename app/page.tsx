@@ -19,6 +19,10 @@ import GDDContainer from "@/components/home/gdd/gdd";
 import GDDContainerSuspense from "@/components/home/gdd/gdd-suspense";
 import BarometerContainer from "@/components/home/barometer/barometer";
 import BarometerContainerSuspense from "@/components/home/barometer/barometer-suspense";
+import ET0Container from "@/components/home/et0/et0";
+import ET0ContainerSuspense from "@/components/home/et0/et0-suspense";
+import HeatStressContainer from "@/components/home/heat/heat";
+import HeatStressContainerSuspense from "@/components/home/heat/heat-suspense";
 
 export const dynamic = "force-dynamic";
 
@@ -85,6 +89,11 @@ export default function Home() {
         <BarometerContainer />
       </Suspense>
 
+      {/* Heat stress (WBGT) */}
+      <Suspense fallback={<HeatStressContainerSuspense />}>
+        <HeatStressContainer />
+      </Suspense>
+
       {/* 7-Day History Charts */}
       <HistoryContainer />
 
@@ -96,6 +105,11 @@ export default function Home() {
       {/* Growing Degree Days */}
       <Suspense fallback={<GDDContainerSuspense />}>
         <GDDContainer />
+      </Suspense>
+
+      {/* Reference evapotranspiration */}
+      <Suspense fallback={<ET0ContainerSuspense />}>
+        <ET0Container />
       </Suspense>
 
       {/* BirdNET + Seismology side by side */}
