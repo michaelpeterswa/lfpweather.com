@@ -148,8 +148,9 @@ export default function AskBar() {
   );
 
   return (
-    <div className="flex flex-1 justify-center px-2 sm:px-4">
-      {/* Desktop: inline ask input */}
+    <div className="ml-auto flex items-center">
+      {/* Desktop: inline ask input, absolutely centered in the header so it
+          does not drift right when the left-hand nav is wider than the right. */}
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -157,7 +158,7 @@ export default function AskBar() {
           setNavDraft("");
           void send(t);
         }}
-        className="hidden w-full max-w-md items-center sm:flex"
+        className="absolute left-1/2 top-1/2 hidden w-full max-w-md -translate-x-1/2 -translate-y-1/2 items-center px-4 sm:flex lg:max-w-[15rem] xl:max-w-md"
       >
         <div className="relative w-full">
           <Sparkles className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -264,7 +265,7 @@ export default function AskBar() {
               setDraft("");
               void send(t);
             }}
-            className="border-t p-3"
+            className="border-t px-4 py-3"
           >
             <InputGroup className="has-[[data-slot=input-group-control]:focus-visible]:border-input has-[[data-slot=input-group-control]:focus-visible]:ring-0">
               <InputGroupInput

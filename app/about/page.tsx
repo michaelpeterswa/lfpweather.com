@@ -16,6 +16,8 @@ import {
   Database,
   Cpu,
   Radio,
+  Trophy,
+  Sparkles,
 } from "lucide-react";
 
 const davisMetrics = [
@@ -50,8 +52,44 @@ export default function About() {
           lfpweather.com provides hyperlocal weather observations, air quality monitoring,
           bird species detection, and environmental data for the Lake Forest Park, Washington area.
           All data is collected from sensors deployed at a single residential observation site
-          and served in real-time.
+          and served in real-time. You can browse record highs and lows, or ask the station
+          questions in plain language from the bar at the top of the page.
         </p>
+      </Container>
+
+      {/* Explore the data */}
+      <Container>
+        <Title title="explore the data" />
+        <p className="text-sm leading-relaxed mb-4">
+          Beyond the live dashboard, two tools help you dig into the station&apos;s data.
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="rounded-lg border bg-secondary/30 p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Trophy className="h-5 w-5 text-accent" />
+              <h3 className="text-sm font-bold">Records</h3>
+            </div>
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              Record high and low readings for every metric, across the current day, week,
+              month, year, and all time. Browse past periods to see each extreme and when it
+              was set. Served from a cached endpoint that recomputes only as new data arrives.
+            </p>
+          </div>
+
+          <div className="rounded-lg border bg-secondary/30 p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Sparkles className="h-5 w-5 text-accent" />
+              <h3 className="text-sm font-bold">Ask lfpweather</h3>
+            </div>
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              A conversational assistant, in the top bar, that answers questions about current
+              conditions, history, records, air quality, and bird detections. Replies stream
+              from a Claude model that reads the station through a Model Context Protocol (MCP)
+              server, with each conversation isolated in its own sandbox.
+            </p>
+          </div>
+        </div>
       </Container>
 
       {/* Station Hardware */}
