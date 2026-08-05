@@ -27,6 +27,7 @@ import {
 } from "lucide-react";
 import { ModeToggle } from "../theme/mode-toggle";
 import { NavigationLink } from "./link";
+import AskBar from "@/components/ask/ask-bar";
 import Main from "@/public/svg/main.svg";
 
 type SectionLink = {
@@ -132,7 +133,8 @@ export default function Navigation() {
           </NavigationMenuList>
         </NavigationMenu>
 
-        <div className="flex-1" />
+        {/* Ask bar */}
+        <AskBar />
 
         {/* Theme toggle */}
         <ModeToggle />
