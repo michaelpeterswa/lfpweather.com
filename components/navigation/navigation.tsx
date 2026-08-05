@@ -39,8 +39,8 @@ type SectionLink = {
 
 export default function Navigation() {
   const pageLinks: NavigationLink[] = [
-    { id: 1, title: "about", href: "/about" },
     { id: 2, title: "records", href: "/records" },
+    { id: 1, title: "about", href: "/about" },
   ];
 
   const sectionLinks: SectionLink[] = [
@@ -63,7 +63,7 @@ export default function Navigation() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
-      <div className="max-w-7xl mx-auto flex h-14 items-center px-4">
+      <div className="max-w-7xl mx-auto flex h-14 items-center px-4 relative">
         {/* Mobile menu */}
         <Sheet>
           <SheetTrigger asChild>
