@@ -35,6 +35,7 @@ import {
   MessageScrollerProvider,
   MessageScrollerViewport,
 } from "@/components/ui/message-scroller";
+import { AnswerMarkdown } from "@/components/ask/answer-markdown";
 
 type Role = "user" | "assistant";
 interface Msg {
@@ -165,7 +166,7 @@ export default function AskBar() {
             onChange={(e) => setNavDraft(e.target.value)}
             placeholder="Ask about the weather…"
             aria-label="Ask about the weather"
-            className="pl-8"
+            className="pl-8 focus-visible:ring-0 focus-visible:ring-offset-0"
           />
         </div>
       </form>
@@ -265,7 +266,7 @@ export default function AskBar() {
             }}
             className="border-t p-3"
           >
-            <InputGroup>
+            <InputGroup className="has-[[data-slot=input-group-control]:focus-visible]:border-input has-[[data-slot=input-group-control]:focus-visible]:ring-0">
               <InputGroupInput
                 value={draft}
                 onChange={(e) => setDraft(e.target.value)}
@@ -302,13 +303,19 @@ function Bubble({ msg }: { msg: Msg }) {
     <div className={cn("flex", isUser ? "justify-end" : "justify-start")}>
       <div
         className={cn(
-          "max-w-[85%] whitespace-pre-wrap rounded-lg px-3 py-2 text-sm",
+          "max-w-[85%] rounded-lg px-3 py-2 text-sm",
           isUser
-            ? "bg-primary text-primary-foreground"
+            ? "whitespace-pre-wrap bg-primary text-primary-foreground"
             : "bg-secondary text-secondary-foreground"
         )}
       >
-        {msg.text || (isUser ? "" : "…")}
+        {isUser ? (
+          msg.text
+        ) : msg.text ? (
+          <AnswerMarkdown text={msg.text} />
+        ) : (
+          "…"
+        )}
       </div>
     </div>
   );
