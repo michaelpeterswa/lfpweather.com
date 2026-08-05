@@ -39,6 +39,7 @@ type SectionLink = {
 export default function Navigation() {
   const pageLinks: NavigationLink[] = [
     { id: 1, title: "about", href: "/about" },
+    { id: 2, title: "records", href: "/records" },
   ];
 
   const sectionLinks: SectionLink[] = [
