@@ -3,6 +3,20 @@ import CameraContainer from "@/components/images/camera/camera-container";
 
 const camerasProps: CameraCardProps[] = [
   {
+    // The only camera here that is ours. The rest are scraped from WSDOT and
+    // WeatherBug; this one is a USB camera on the collector Pi, uploading a
+    // frame every ten minutes to a private bucket. An in-cluster job copies
+    // the newest frame onto the volume nginx serves, so the archive itself is
+    // never public -- only this single file is.
+    //
+    // Expect infrared at night: the camera drops its IR-cut filter after dusk
+    // on its own, so foliage goes bright white and the image turns grey.
+    id: 0,
+    title: "Manhattan Project",
+    description: "Camera looking north over the solar array and treeline",
+    url: "https://images.lfpweather.com/manhattanproject/camera/latest.jpg",
+  },
+  {
     id: 1,
     title: "Shorecrest High School",
     description: "Camera looking east towards Cascade Mountains",
