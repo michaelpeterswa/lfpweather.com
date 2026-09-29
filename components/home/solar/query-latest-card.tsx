@@ -20,6 +20,9 @@ export default async function SolarLatestCard({
 }: {
   props: SolarLatestCardProps;
 }) {
+  // A dropped connection (ECONNRESET) makes fetch throw; treat it like any
+  // other failed response so this card shows its error state instead of
+  // failing the whole section.
   const res = await fetch(`${process.env.API_BASE_URL ?? ""}/api/v1/query`, {
     method: "POST",
     headers: {
@@ -41,10 +44,10 @@ export default async function SolarLatestCard({
       bucket: "5m",
       aggregations: ["last"],
     }),
-  });
+  }).catch(() => null);
 
   const points =
-    res.status === 200 ? ((await res.json()) as QueryResponse).points : [];
+    res?.status === 200 ? ((await res.json()) as QueryResponse).points : [];
   const latest = points.length > 0 ? points[points.length - 1] : undefined;
 
   if (!latest || latest.last === undefined || latest.last === null) {
