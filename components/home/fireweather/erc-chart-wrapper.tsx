@@ -20,6 +20,9 @@ export default async function ErcChartWrapper({
   p90: number;
   p97: number;
 }) {
+  // A dropped connection (ECONNRESET) makes fetch throw; treat it like any
+  // other failed response so this card shows its error state instead of
+  // failing the whole section.
   const res = await fetch(`${process.env.API_BASE_URL ?? ""}/api/v1/query`, {
     method: "POST",
     headers: {
@@ -31,10 +34,10 @@ export default async function ErcChartWrapper({
       range: "90d",
       aggregations: ["avg", "min", "max"],
     }),
-  });
+  }).catch(() => null);
 
   const data =
-    res.status === 200
+    res?.status === 200
       ? (await res.json() as QueryResponse).points.map(
           (p): ErcPoint => ({
             time: p.time,

@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM oven/bun:1.3 AS base
+FROM oven/bun:1.4 AS base
 WORKDIR /usr/src/app
 
 # install dependencies into temp directory
