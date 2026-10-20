@@ -19,8 +19,6 @@ import FireWeatherContainer from "@/components/home/fireweather/fireweather";
 import FireWeatherContainerSuspense from "@/components/home/fireweather/fireweather-suspense";
 import GDDContainer from "@/components/home/gdd/gdd";
 import GDDContainerSuspense from "@/components/home/gdd/gdd-suspense";
-import BarometerContainer from "@/components/home/barometer/barometer";
-import BarometerContainerSuspense from "@/components/home/barometer/barometer-suspense";
 import ET0Container from "@/components/home/et0/et0";
 import ET0ContainerSuspense from "@/components/home/et0/et0-suspense";
 import HeatStressContainer from "@/components/home/heat/heat";
@@ -96,11 +94,6 @@ export default function Home() {
       {/* AI Insights - current conditions, smoke outlook, fire weather */}
       <Suspense fallback={<AIInsightsContainerSuspense />}>
         <AIInsightsContainer />
-      </Suspense>
-
-      {/* Barometer forecast (Zambretti) */}
-      <Suspense fallback={<BarometerContainerSuspense />}>
-        <BarometerContainer />
       </Suspense>
 
       {/* Heat stress (WBGT) */}
