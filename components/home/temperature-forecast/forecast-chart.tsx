@@ -10,6 +10,8 @@ import {
 import {
   ChartConfig,
   ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
@@ -18,9 +20,9 @@ import { ChartPoint } from "./types";
 
 const chartConfig = {
   median: { label: "forecast", color: "hsl(var(--chart-1))" },
-  band: { label: "10–90%", color: "hsl(var(--chart-2))" },
+  band: { label: "10–90% range", color: "hsl(var(--chart-2))" },
   nws: { label: "NWS", color: "hsl(var(--chart-3))" },
-  observed: { label: "observed", color: "hsl(var(--chart-4))" },
+  observed: { label: "observed", color: "hsl(var(--muted-foreground))" },
 } satisfies ChartConfig;
 
 // ForecastChart plots recent observations, the Timestral median with its
@@ -75,6 +77,7 @@ export function ForecastChart({ data }: { data: ChartPoint[] }) {
             />
           }
         />
+        <ChartLegend content={<ChartLegendContent />} />
         <Area
           dataKey="band"
           name="10–90%"
@@ -89,7 +92,7 @@ export function ForecastChart({ data }: { data: ChartPoint[] }) {
           dataKey="observed"
           name="observed"
           type="monotone"
-          stroke="hsl(var(--chart-4))"
+          stroke="hsl(var(--muted-foreground))"
           strokeWidth={2}
           dot={false}
           connectNulls
