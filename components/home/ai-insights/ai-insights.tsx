@@ -5,8 +5,9 @@ import { AIInsightResponse, InsightConfig } from "./types";
 import { Sparkles } from "lucide-react";
 import { formatDistance } from "date-fns";
 import WeatherIcon from "@/components/weather/icons";
+import { isSectionEnabled } from "@/lib/sections";
 
-const INSIGHTS: InsightConfig[] = [
+const ALL_INSIGHTS: InsightConfig[] = [
   { key: "current", label: "Right Now", path: "/api/v1/current" },
   { key: "smoke", label: "Smoke Outlook", path: "/api/v1/smoke" },
   { key: "fire", label: "Fire Weather", path: "/api/v1/fire_weather" },
@@ -34,6 +35,9 @@ async function fetchInsight(path: string): Promise<AIInsightResponse | null> {
 }
 
 export default async function AIInsightsContainer() {
+  const INSIGHTS = ALL_INSIGHTS.filter(
+    (i) => i.key !== "fire" || isSectionEnabled("ai-insights-fire")
+  );
   const results = await Promise.all(INSIGHTS.map((i) => fetchInsight(i.path)));
   const rows = INSIGHTS.map((config, idx) => ({
     config,

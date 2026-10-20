@@ -28,6 +28,7 @@ import {
 import { ModeToggle } from "../theme/mode-toggle";
 import { NavigationLink } from "./link";
 import AskBar from "@/components/ask/ask-bar";
+import { SECTIONS } from "@/lib/sections";
 import Main from "@/public/svg/main.svg";
 
 type SectionLink = {
@@ -37,29 +38,44 @@ type SectionLink = {
   icon: React.ReactNode;
 };
 
-export default function Navigation() {
+const icon = "h-3.5 w-3.5";
+const SECTION_ICONS: Record<string, React.ReactNode> = {
+  "current-conditions": <Thermometer className={icon} />,
+  "ai-forecast": <BrainCircuit className={icon} />,
+  "station-forecast": <TrendingUp className={icon} />,
+  "heat-stress": <ThermometerSun className={icon} />,
+  "7-day-history": <BarChart3 className={icon} />,
+  "fire-weather": <Flame className={icon} />,
+  "degree-days": <Sprout className={icon} />,
+  evapotranspiration: <Droplets className={icon} />,
+  "birdnet-24h": <Bird className={icon} />,
+  seismology: <Activity className={icon} />,
+  "solar-batteries": <BatteryCharging className={icon} />,
+  "forecast-images": <ImageIcon className={icon} />,
+  "nws-forecast": <CloudSun className={icon} />,
+  "local-cameras": <Camera className={icon} />,
+  "power-breakdown": <Zap className={icon} />,
+};
+
+export default function Navigation({
+  disabledSections = [],
+}: {
+  disabledSections?: string[];
+}) {
   const pageLinks: NavigationLink[] = [
     { id: 2, title: "records", href: "/records" },
     { id: 1, title: "about", href: "/about" },
   ];
 
-  const sectionLinks: SectionLink[] = [
-    { id: 1, title: "now", href: "#current-conditions", icon: <Thermometer className="h-3.5 w-3.5" /> },
-    { id: 2, title: "ai", href: "#ai-forecast", icon: <BrainCircuit className="h-3.5 w-3.5" /> },
-    { id: 16, title: "station", href: "#station-forecast", icon: <TrendingUp className="h-3.5 w-3.5" /> },
-    { id: 14, title: "heat", href: "#heat-stress", icon: <ThermometerSun className="h-3.5 w-3.5" /> },
-    { id: 3, title: "7d", href: "#7-day-history", icon: <BarChart3 className="h-3.5 w-3.5" /> },
-    { id: 11, title: "fire", href: "#fire-weather", icon: <Flame className="h-3.5 w-3.5" /> },
-    { id: 13, title: "gdd", href: "#degree-days", icon: <Sprout className="h-3.5 w-3.5" /> },
-    { id: 15, title: "et", href: "#evapotranspiration", icon: <Droplets className="h-3.5 w-3.5" /> },
-    { id: 4, title: "birds", href: "#birdnet-24h", icon: <Bird className="h-3.5 w-3.5" /> },
-    { id: 5, title: "seismic", href: "#seismology", icon: <Activity className="h-3.5 w-3.5" /> },
-    { id: 10, title: "solar", href: "#solar-batteries", icon: <BatteryCharging className="h-3.5 w-3.5" /> },
-    { id: 7, title: "images", href: "#forecast-images", icon: <ImageIcon className="h-3.5 w-3.5" /> },
-    { id: 8, title: "forecast", href: "#nws-forecast", icon: <CloudSun className="h-3.5 w-3.5" /> },
-    { id: 9, title: "cameras", href: "#local-cameras", icon: <Camera className="h-3.5 w-3.5" /> },
-    { id: 6, title: "power", href: "#power-breakdown", icon: <Zap className="h-3.5 w-3.5" /> },
-  ];
+  const disabled = new Set(disabledSections);
+  const sectionLinks: SectionLink[] = SECTIONS.filter(
+    (section) => section.navTitle && section.href && !disabled.has(section.key)
+  ).map((section, i) => ({
+    id: i,
+    title: section.navTitle as string,
+    href: section.href as string,
+    icon: SECTION_ICONS[section.key],
+  }));
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
