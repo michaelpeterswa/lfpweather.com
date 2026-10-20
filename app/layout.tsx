@@ -6,6 +6,7 @@ import { bricolage, redhatmono } from "./fonts";
 import { cn } from "@/lib/utils";
 import Navigation from "@/components/navigation/navigation";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { getDisabledSections } from "@/lib/sections";
 import type { Viewport } from "next";
 
 export const viewport: Viewport = {
@@ -33,6 +34,9 @@ export const metadata: Metadata = {
   },
 };
 
+// The section nav depends on DISABLED_SECTIONS, which must be read per request.
+export const dynamic = "force-dynamic";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -58,7 +62,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <div className="flex flex-col min-h-screen">
-            <Navigation />
+            <Navigation disabledSections={[...getDisabledSections()]} />
             <main className="flex-1 w-full max-w-7xl mx-auto px-4 py-6">
               {children}
             </main>

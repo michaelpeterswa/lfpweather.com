@@ -26,6 +26,8 @@ import HeatStressContainerSuspense from "@/components/home/heat/heat-suspense";
 import TemperatureForecastContainer from "@/components/home/temperature-forecast/temperature-forecast";
 import TemperatureForecastContainerSuspense from "@/components/home/temperature-forecast/temperature-forecast-suspense";
 
+import { isSectionEnabled } from "@/lib/sections";
+
 export const dynamic = "force-dynamic";
 
 const camerasProps: CameraCardProps[] = [
@@ -71,79 +73,113 @@ const forecastImageProps: CameraCardProps[] = [
 ];
 
 export default function Home() {
+  const on = (key: string) => isSectionEnabled(key);
+  const birdnet = on("birdnet-24h");
+  const seismology = on("seismology");
+
   return (
     <div className="space-y-6">
       {/* Alerts - full width */}
-      <AlertsContainer zone="WAZ313" />
+      {on("nws-alerts") && <AlertsContainer zone="WAZ313" />}
 
       {/* Current Conditions - hero grid */}
-      <Suspense fallback={<CurrentContainerSuspense />}>
-        <CurrentContainer />
-      </Suspense>
+      {on("current-conditions") && (
+        <Suspense fallback={<CurrentContainerSuspense />}>
+          <CurrentContainer />
+        </Suspense>
+      )}
 
       {/* AI Forecast */}
-      <Suspense fallback={<AIForecastContainerSuspense />}>
-        <AIForecastContainer />
-      </Suspense>
+      {on("ai-forecast") && (
+        <Suspense fallback={<AIForecastContainerSuspense />}>
+          <AIForecastContainer />
+        </Suspense>
+      )}
 
       {/* Station temperature forecast (Timestral) */}
-      <Suspense fallback={<TemperatureForecastContainerSuspense />}>
-        <TemperatureForecastContainer />
-      </Suspense>
+      {on("station-forecast") && (
+        <Suspense fallback={<TemperatureForecastContainerSuspense />}>
+          <TemperatureForecastContainer />
+        </Suspense>
+      )}
 
       {/* AI Insights - current conditions, smoke outlook, fire weather */}
-      <Suspense fallback={<AIInsightsContainerSuspense />}>
-        <AIInsightsContainer />
-      </Suspense>
+      {on("ai-insights") && (
+        <Suspense fallback={<AIInsightsContainerSuspense />}>
+          <AIInsightsContainer />
+        </Suspense>
+      )}
 
       {/* Heat stress (WBGT) */}
-      <Suspense fallback={<HeatStressContainerSuspense />}>
-        <HeatStressContainer />
-      </Suspense>
+      {on("heat-stress") && (
+        <Suspense fallback={<HeatStressContainerSuspense />}>
+          <HeatStressContainer />
+        </Suspense>
+      )}
 
       {/* 7-Day History Charts */}
-      <HistoryContainer />
+      {on("7-day-history") && <HistoryContainer />}
 
       {/* Fire Weather - danger rating + ERC trend */}
-      <Suspense fallback={<FireWeatherContainerSuspense />}>
-        <FireWeatherContainer />
-      </Suspense>
+      {on("fire-weather") && (
+        <Suspense fallback={<FireWeatherContainerSuspense />}>
+          <FireWeatherContainer />
+        </Suspense>
+      )}
 
       {/* Growing Degree Days */}
-      <Suspense fallback={<GDDContainerSuspense />}>
-        <GDDContainer />
-      </Suspense>
+      {on("degree-days") && (
+        <Suspense fallback={<GDDContainerSuspense />}>
+          <GDDContainer />
+        </Suspense>
+      )}
 
       {/* Reference evapotranspiration */}
-      <Suspense fallback={<ET0ContainerSuspense />}>
-        <ET0Container />
-      </Suspense>
+      {on("evapotranspiration") && (
+        <Suspense fallback={<ET0ContainerSuspense />}>
+          <ET0Container />
+        </Suspense>
+      )}
 
-      {/* BirdNET + Seismology side by side */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <BirdnetContainer />
-        <RaspberryShakeContainer />
-      </div>
+      {/* BirdNET + Seismology side by side (a lone one spans full width) */}
+      {(birdnet || seismology) && (
+        <div
+          className={
+            birdnet && seismology
+              ? "grid grid-cols-1 lg:grid-cols-2 gap-6"
+              : "grid grid-cols-1 gap-6"
+          }
+        >
+          {birdnet && <BirdnetContainer />}
+          {seismology && <RaspberryShakeContainer />}
+        </div>
+      )}
 
       {/* Solar Power & Batteries */}
-      <SolarContainer />
+      {on("solar-batteries") && <SolarContainer />}
 
       {/* Forecast Images */}
-      <CameraContainer
-        title="forecast images"
-        camerasProps={forecastImageProps}
-      />
+      {on("forecast-images") && (
+        <CameraContainer
+          title="forecast images"
+          camerasProps={forecastImageProps}
+        />
+      )}
 
       {/* NWS Detailed Forecast */}
-      <Suspense fallback={<ForecastContainerSuspense />}>
-        <ForecastContainer />
-      </Suspense>
+      {on("nws-forecast") && (
+        <Suspense fallback={<ForecastContainerSuspense />}>
+          <ForecastContainer />
+        </Suspense>
+      )}
 
       {/* Local Cameras */}
-      <CameraContainer title="local cameras" camerasProps={camerasProps} />
+      {on("local-cameras") && (
+        <CameraContainer title="local cameras" camerasProps={camerasProps} />
+      )}
 
       {/* Power Breakdown */}
-      <ElectricityMapsContainer />
+      {on("power-breakdown") && <ElectricityMapsContainer />}
     </div>
   );
 }
