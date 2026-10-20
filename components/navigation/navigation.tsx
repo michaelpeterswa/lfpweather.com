@@ -24,6 +24,7 @@ import {
   Sprout,
   ThermometerSun,
   Droplets,
+  TrendingUp,
 } from "lucide-react";
 import { ModeToggle } from "../theme/mode-toggle";
 import { NavigationLink } from "./link";
@@ -46,6 +47,7 @@ export default function Navigation() {
   const sectionLinks: SectionLink[] = [
     { id: 1, title: "now", href: "#current-conditions", icon: <Thermometer className="h-3.5 w-3.5" /> },
     { id: 2, title: "ai", href: "#ai-forecast", icon: <BrainCircuit className="h-3.5 w-3.5" /> },
+    { id: 16, title: "station", href: "#station-forecast", icon: <TrendingUp className="h-3.5 w-3.5" /> },
     { id: 12, title: "baro", href: "#barometer-forecast", icon: <Gauge className="h-3.5 w-3.5" /> },
     { id: 14, title: "heat", href: "#heat-stress", icon: <ThermometerSun className="h-3.5 w-3.5" /> },
     { id: 3, title: "7d", href: "#7-day-history", icon: <BarChart3 className="h-3.5 w-3.5" /> },

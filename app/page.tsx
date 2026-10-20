@@ -25,6 +25,8 @@ import ET0Container from "@/components/home/et0/et0";
 import ET0ContainerSuspense from "@/components/home/et0/et0-suspense";
 import HeatStressContainer from "@/components/home/heat/heat";
 import HeatStressContainerSuspense from "@/components/home/heat/heat-suspense";
+import TemperatureForecastContainer from "@/components/home/temperature-forecast/temperature-forecast";
+import TemperatureForecastContainerSuspense from "@/components/home/temperature-forecast/temperature-forecast-suspense";
 
 export const dynamic = "force-dynamic";
 
@@ -84,6 +86,11 @@ export default function Home() {
       {/* AI Forecast */}
       <Suspense fallback={<AIForecastContainerSuspense />}>
         <AIForecastContainer />
+      </Suspense>
+
+      {/* Station temperature forecast (Timestral) */}
+      <Suspense fallback={<TemperatureForecastContainerSuspense />}>
+        <TemperatureForecastContainer />
       </Suspense>
 
       {/* AI Insights - current conditions, smoke outlook, fire weather */}
