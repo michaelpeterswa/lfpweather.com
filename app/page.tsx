@@ -29,6 +29,7 @@ import TemperatureForecastContainer from "@/components/home/temperature-forecast
 import TemperatureForecastContainerSuspense from "@/components/home/temperature-forecast/temperature-forecast-suspense";
 
 import { isSectionEnabled } from "@/lib/sections";
+import AutoRefresh from "@/components/refresh/auto-refresh";
 
 export const dynamic = "force-dynamic";
 
@@ -85,6 +86,8 @@ export default function Home() {
 
   return (
     <div className="space-y-6">
+      <AutoRefresh />
+
       {/* Alerts - full width. No skeleton: there are usually no alerts, and a
           placeholder would flash and collapse on almost every load. */}
       {on("nws-alerts") && (

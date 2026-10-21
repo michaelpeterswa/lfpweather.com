@@ -69,6 +69,7 @@ components/
   theme/          # ThemeProvider, ModeToggle
   footer/         # Site footer
   share/          # Share button
+  refresh/        # AutoRefresh (periodic router.refresh on the home page)
 ```
 
 ## Key Constraints
