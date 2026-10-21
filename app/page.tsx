@@ -28,7 +28,7 @@ import HeatStressContainerSuspense from "@/components/home/heat/heat-suspense";
 import TemperatureForecastContainer from "@/components/home/temperature-forecast/temperature-forecast";
 import TemperatureForecastContainerSuspense from "@/components/home/temperature-forecast/temperature-forecast-suspense";
 
-import { isSectionEnabled } from "@/lib/sections";
+import { getDisabledSections } from "@/lib/sections";
 import AutoRefresh from "@/components/refresh/auto-refresh";
 
 export const dynamic = "force-dynamic";
@@ -80,7 +80,9 @@ const forecastImageProps: CameraCardProps[] = [
 ];
 
 export default function Home() {
-  const on = (key: string) => isSectionEnabled(key);
+  // Computed once per render: it reads the env and the station's date.
+  const hidden = getDisabledSections();
+  const on = (key: string) => !hidden.has(key);
   const birdnet = on("birdnet-24h");
   const seismology = on("seismology");
 
@@ -103,6 +105,13 @@ export default function Home() {
         </Suspense>
       )}
 
+      {/* AI Insights - current conditions, smoke outlook, fire weather */}
+      {on("ai-insights") && (
+        <Suspense fallback={<AIInsightsContainerSuspense />}>
+          <AIInsightsContainer />
+        </Suspense>
+      )}
+
       {/* AI Forecast */}
       {on("ai-forecast") && (
         <Suspense fallback={<AIForecastContainerSuspense />}>
@@ -117,11 +126,19 @@ export default function Home() {
         </Suspense>
       )}
 
-      {/* AI Insights - current conditions, smoke outlook, fire weather */}
-      {on("ai-insights") && (
-        <Suspense fallback={<AIInsightsContainerSuspense />}>
-          <AIInsightsContainer />
+      {/* NWS Detailed Forecast */}
+      {on("nws-forecast") && (
+        <Suspense fallback={<ForecastContainerSuspense />}>
+          <ForecastContainer />
         </Suspense>
+      )}
+
+      {/* Forecast Images */}
+      {on("forecast-images") && (
+        <CameraContainer
+          title="forecast images"
+          camerasProps={forecastImageProps}
+        />
       )}
 
       {/* Heat stress (WBGT) */}
@@ -175,21 +192,6 @@ export default function Home() {
 
       {/* Solar Power & Batteries */}
       {on("solar-batteries") && <SolarContainer />}
-
-      {/* Forecast Images */}
-      {on("forecast-images") && (
-        <CameraContainer
-          title="forecast images"
-          camerasProps={forecastImageProps}
-        />
-      )}
-
-      {/* NWS Detailed Forecast */}
-      {on("nws-forecast") && (
-        <Suspense fallback={<ForecastContainerSuspense />}>
-          <ForecastContainer />
-        </Suspense>
-      )}
 
       {/* Local Cameras */}
       {on("local-cameras") && (

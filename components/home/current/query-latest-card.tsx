@@ -1,25 +1,28 @@
 import { formatDistance } from "date-fns";
-import { QueryResponse } from "./types";
+import { QueryResponse } from "@/components/home/solar/types";
 import { apiFetch } from "@/lib/api";
 
-export type SolarLatestCardProps = {
+export type QueryLatestCardProps = {
   metric: string;
   title: string;
   unit: string;
   transform?: (n: number) => number;
+  /** Fixed decimal places; by default whole numbers show as-is, others get 2. */
+  decimals?: number;
 };
 
-// SolarLatestCard is the /api/v1/query analog of CurrentCard: it asks for the
+// QueryLatestCard is the /api/v1/query analog of CurrentCard: it asks for the
 // last value in a bucket and renders the same compact tile.
 //
 // Unlike CurrentCard it cannot use a /last endpoint, because those exist only
-// for a fixed set of weather metrics and none of the power ones. It therefore
+// for a fixed set of weather metrics -- none of the power ones, and not dew
+// point, feels-like, or daily rain. It therefore
 // reads the last point of a bucketed series, which is why the bucket size
 // matters to the timestamp and not just to the value.
-export default async function SolarLatestCard({
+export default async function QueryLatestCard({
   props,
 }: {
-  props: SolarLatestCardProps;
+  props: QueryLatestCardProps;
 }) {
   const res = await apiFetch<QueryResponse>("/api/v1/query", {
     body: {
@@ -62,7 +65,7 @@ export default async function SolarLatestCard({
     <div className="rounded-lg border bg-secondary/50 p-3 hover:bg-secondary/80 transition-colors">
       <p className="text-xs text-muted-foreground truncate">{props.title}</p>
       <p className="font-mono-data text-xl font-bold tracking-tight mt-0.5">
-        {formatValue(value)}
+        {formatValue(value, props.decimals)}
         <span className="text-sm font-normal text-muted-foreground ml-1">
           {props.unit}
         </span>
@@ -72,6 +75,9 @@ export default async function SolarLatestCard({
   );
 }
 
-function formatValue(value: number): string {
+function formatValue(value: number, decimals?: number): string {
+  if (decimals !== undefined) {
+    return value.toFixed(decimals);
+  }
   return Number.isInteger(value) ? String(value) : value.toFixed(2);
 }
