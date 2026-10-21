@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Sparkles, ArrowUp, Loader2 } from "lucide-react";
+import { Sparkles, ArrowUp, Loader2, RotateCcw } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -41,6 +41,10 @@ type Role = "user" | "assistant";
 interface Msg {
   role: Role;
   text: string;
+  /** Set on an assistant turn that failed; shown under any partial text. */
+  error?: string;
+  /** The question a failed turn answered, so it can be asked again. */
+  retry?: string;
 }
 
 const SUGGESTIONS = [
@@ -62,6 +66,30 @@ export default function AskBar() {
   const [draft, setDraft] = React.useState("");
   const [streaming, setStreaming] = React.useState(false);
   const [status, setStatus] = React.useState("");
+  const followUpRef = React.useRef<HTMLInputElement>(null);
+
+  // Put the cursor back in the follow-up box once an answer finishes, so the
+  // next question can be typed straight away.
+  React.useEffect(() => {
+    if (open && !streaming) {
+      followUpRef.current?.focus();
+    }
+  }, [open, streaming]);
+
+  // failAssistant marks the turn in progress as failed. The agent leaves the
+  // conversation as it was before a failed turn, so asking again is safe.
+  const failAssistant = React.useCallback((error: string, question: string) => {
+    setMessages((prev) => {
+      const next = prev.slice();
+      for (let i = next.length - 1; i >= 0; i--) {
+        if (next[i].role === "assistant") {
+          next[i] = { ...next[i], error, retry: question };
+          break;
+        }
+      }
+      return next;
+    });
+  }, []);
 
   const appendToAssistant = React.useCallback((chunk: string) => {
     setMessages((prev) => {
@@ -77,7 +105,7 @@ export default function AskBar() {
   }, []);
 
   const handleFrame = React.useCallback(
-    (frame: string) => {
+    (frame: string, question: string) => {
       const line = frame.split("\n").find((l) => l.startsWith("data:"));
       if (!line) return;
       let ev: { type?: string; text?: string; tool?: string; status?: string };
@@ -93,20 +121,25 @@ export default function AskBar() {
         setStatus(`looking up ${humanTool(ev.tool)}…`);
       } else if (ev.type === "error") {
         setStatus("");
-        appendToAssistant(ev.text ? `\n\n_${ev.text}_` : "\n\n_Something went wrong._");
+        failAssistant(ev.text || "Something went wrong.", question);
       }
     },
-    [appendToAssistant]
+    [appendToAssistant, failAssistant]
   );
 
   const send = React.useCallback(
-    async (raw: string) => {
+    async (raw: string, opts: { replaceFailed?: boolean } = {}) => {
       const text = raw.trim();
       if (!text || streaming) return;
       if (!sessionId.current) sessionId.current = crypto.randomUUID();
 
       setOpen(true);
-      setMessages((prev) => [...prev, { role: "user", text }, { role: "assistant", text: "" }]);
+      setMessages((prev) => {
+        // Retrying replaces the failed pair rather than repeating it.
+        const base =
+          opts.replaceFailed && prev.at(-1)?.error ? prev.slice(0, -2) : prev;
+        return [...base, { role: "user", text }, { role: "assistant", text: "" }];
+      });
       setStreaming(true);
       setStatus("thinking…");
 
@@ -117,10 +150,13 @@ export default function AskBar() {
           body: JSON.stringify({ session_id: sessionId.current, message: text }),
         });
         if (!res.ok || !res.body) {
-          appendToAssistant(
-            res.status === 503
-              ? "The assistant is not configured yet."
-              : "The assistant is unavailable right now."
+          failAssistant(
+            res.status === 429
+              ? "You're asking quickly. Wait a few seconds, then try again."
+              : res.status === 503
+                ? "The assistant is not configured yet."
+                : "The assistant is unavailable right now.",
+            text
           );
           return;
         }
@@ -133,18 +169,18 @@ export default function AskBar() {
           buffer += decoder.decode(value, { stream: true });
           let idx: number;
           while ((idx = buffer.indexOf("\n\n")) !== -1) {
-            handleFrame(buffer.slice(0, idx));
+            handleFrame(buffer.slice(0, idx), text);
             buffer = buffer.slice(idx + 2);
           }
         }
       } catch {
-        appendToAssistant("\n\n_The connection was interrupted._");
+        failAssistant("The connection was interrupted.", text);
       } finally {
         setStreaming(false);
         setStatus("");
       }
     },
-    [streaming, appendToAssistant, handleFrame]
+    [streaming, failAssistant, handleFrame]
   );
 
   return (
@@ -239,7 +275,14 @@ export default function AskBar() {
                           messageId={String(i)}
                           scrollAnchor={m.role === "user"}
                         >
-                          <Bubble msg={m} />
+                          <Bubble
+                            msg={m}
+                            onRetry={
+                              m.retry && i === messages.length - 1 && !streaming
+                                ? () => void send(m.retry!, { replaceFailed: true })
+                                : undefined
+                            }
+                          />
                         </MessageScrollerItem>
                       ))}
                       {status && (
@@ -268,12 +311,15 @@ export default function AskBar() {
             className="border-t px-4 py-3"
           >
             <InputGroup className="has-[[data-slot=input-group-control]:focus-visible]:border-input has-[[data-slot=input-group-control]:focus-visible]:ring-0">
+              {/* Stays enabled while an answer streams, so the next question
+                  can be typed; only sending waits. Disabling it dropped focus
+                  after every answer. */}
               <InputGroupInput
+                ref={followUpRef}
                 value={draft}
                 onChange={(e) => setDraft(e.target.value)}
                 placeholder="Ask a follow-up…"
                 aria-label="Ask a follow-up"
-                disabled={streaming}
               />
               <InputGroupAddon align="inline-end">
                 <InputGroupButton
@@ -298,7 +344,7 @@ export default function AskBar() {
   );
 }
 
-function Bubble({ msg }: { msg: Msg }) {
+function Bubble({ msg, onRetry }: { msg: Msg; onRetry?: () => void }) {
   const isUser = msg.role === "user";
   return (
     <div className={cn("flex", isUser ? "justify-end" : "justify-start")}>
@@ -314,8 +360,27 @@ function Bubble({ msg }: { msg: Msg }) {
           msg.text
         ) : msg.text ? (
           <AnswerMarkdown text={msg.text} />
-        ) : (
+        ) : msg.error ? null : (
           "…"
+        )}
+        {msg.error && (
+          <div className={cn("flex flex-wrap items-center gap-2", msg.text && "mt-2")}>
+            <p role="alert" className="text-sm italic">
+              {msg.error}
+            </p>
+            {onRetry && (
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="h-7 gap-1"
+                onClick={onRetry}
+              >
+                <RotateCcw className="h-3 w-3" />
+                Retry
+              </Button>
+            )}
+          </div>
         )}
       </div>
     </div>
