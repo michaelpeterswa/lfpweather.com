@@ -9,19 +9,14 @@ import {
 } from "@/components/ui/accordion";
 import React from "react";
 import Title from "@/components/layout/container/title";
+import { apiFetch } from "@/lib/api";
 
 export default async function AlertsContainer({ zone }: { zone: string }) {
-  const res = await fetch(
-    `https://api.weather.gov/alerts/active/zone/${zone}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
+  const alerts = await apiFetch<NWSAlertActiveZoneResponse>(
+    `https://api.weather.gov/alerts/active/zone/${zone}`
   );
 
-  if (res.status !== 200) {
+  if (!alerts) {
     return (
       <Container isAlert>
         <Title title="nws alerts" />
@@ -31,9 +26,7 @@ export default async function AlertsContainer({ zone }: { zone: string }) {
       </Container>
     );
   } else {
-    const alerts = (await res.json()) as NWSAlertActiveZoneResponse;
-
-    if (alerts && alerts.features && alerts.features.length > 0) {
+    if (alerts.features && alerts.features.length > 0) {
       return (
         <Container isAlert>
           <Title title="nws alerts" />

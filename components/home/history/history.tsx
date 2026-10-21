@@ -1,4 +1,6 @@
+import { Suspense } from "react";
 import LineWrapper from "@/components/home/charts/line/linewrapper";
+import LineChartCardSuspense from "@/components/home/charts/line/line-suspense";
 import { LineChartCardConfig } from "@/components/home/charts/line/types";
 import Container from "@/components/layout/container/container";
 import Title from "@/components/layout/container/title";
@@ -119,12 +121,16 @@ function HistoryBlock({
       <Title title={title} />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {blocks.map((block) => (
-          <LineWrapper
+          <Suspense
             key={block.field}
-            field={block.field}
-            lookback={lookback}
-            lineChartCardConfig={block.lineChartCardConfig}
-          />
+            fallback={<LineChartCardSuspense config={block.lineChartCardConfig} />}
+          >
+            <LineWrapper
+              field={block.field}
+              lookback={lookback}
+              lineChartCardConfig={block.lineChartCardConfig}
+            />
+          </Suspense>
         ))}
       </div>
     </>

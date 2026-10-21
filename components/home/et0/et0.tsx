@@ -2,19 +2,14 @@ import Container from "@/components/layout/container/container";
 import Title from "@/components/layout/container/title";
 import { ET0Chart } from "./et0-chart";
 import { ET0Summary } from "./types";
+import { apiFetch } from "@/lib/api";
 
 // ET0Container fetches the year-to-date reference evapotranspiration and shows
 // the accumulated water demand plus a cumulative chart.
 export default async function ET0Container() {
-  const res = await fetch(`${process.env.API_BASE_URL ?? ""}/api/v1/et0`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "X-API-Key": process.env.API_KEY ?? "",
-    },
-  });
+  const s = await apiFetch<ET0Summary>("/api/v1/et0");
 
-  if (res.status !== 200) {
+  if (!s) {
     return (
       <Container isAlert>
         <Title title="evapotranspiration" />
@@ -22,8 +17,6 @@ export default async function ET0Container() {
       </Container>
     );
   }
-
-  const s = (await res.json()) as ET0Summary;
 
   return (
     <Container>

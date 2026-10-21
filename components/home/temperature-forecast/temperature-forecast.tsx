@@ -3,6 +3,7 @@ import Title from "@/components/layout/container/title";
 import { formatSiteShort } from "@/lib/datetime";
 import { ForecastChart } from "./forecast-chart";
 import { TemperatureForecast, toChartPoints } from "./types";
+import { apiFetch } from "@/lib/api";
 
 const SOURCE_LABELS: Record<string, string> = {
   timestral: "Timestral",
@@ -12,20 +13,11 @@ const SOURCE_LABELS: Record<string, string> = {
 // TemperatureForecastContainer shows the latest 24h station temperature
 // forecast with its uncertainty band, the NWS forecast and recent observations.
 export default async function TemperatureForecastContainer() {
-  // A dropped connection makes fetch throw; treat it like any failed response
-  // so the card shows its error state.
-  const res = await fetch(
-    `${process.env.API_BASE_URL ?? ""}/api/v1/temperature_forecast/latest`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "X-API-Key": process.env.API_KEY ?? "",
-      },
-    }
-  ).catch(() => null);
+  const f = await apiFetch<TemperatureForecast>(
+    "/api/v1/temperature_forecast/latest"
+  );
 
-  if (res === null || res.status !== 200) {
+  if (!f) {
     return (
       <Container isAlert>
         <Title title="station forecast" />
@@ -34,7 +26,6 @@ export default async function TemperatureForecastContainer() {
     );
   }
 
-  const f = (await res.json()) as TemperatureForecast;
   const source = SOURCE_LABELS[f.source] ?? f.source;
 
   return (

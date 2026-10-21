@@ -12,6 +12,7 @@ import {
 } from "@/components/home/charts/line/types";
 import { CloudLightning } from "lucide-react";
 import { QueryResponse } from "./types";
+import { apiFetch } from "@/lib/api";
 
 // QueryLineWrapper is the /api/v1/query analog of LineWrapper: it POSTs a
 // structured query for a single metric and adapts the {points:[{time,avg,min,
@@ -27,21 +28,13 @@ export default async function QueryLineWrapper({
   range: string;
   lineChartCardConfig: LineChartCardConfig;
 }) {
-  // A dropped connection (ECONNRESET) makes fetch throw; treat it like any
-  // other failed response so this card shows its error state instead of
-  // failing the whole section.
-  const res = await fetch(`${process.env.API_BASE_URL ?? ""}/api/v1/query`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-API-Key": process.env.API_KEY ?? "",
-    },
-    body: JSON.stringify({ metric, range, aggregations: ["avg", "min", "max"] }),
-  }).catch(() => null);
+  const res = await apiFetch<QueryResponse>("/api/v1/query", {
+    body: { metric, range, aggregations: ["avg", "min", "max"] },
+  });
 
   const chartData =
-    res?.status === 200
-      ? ((await res.json()) as QueryResponse).points.map(
+    res !== null
+      ? res.points.map(
           (p): LineSection => ({
             time: p.time,
             min: p.min ?? p.avg ?? 0,

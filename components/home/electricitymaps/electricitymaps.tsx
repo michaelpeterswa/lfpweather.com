@@ -5,21 +5,13 @@ import { VBarChartCardConfig, VBarSection } from "../charts/vbar/types";
 import { VBarChartCard } from "../charts/vbar/vbar";
 import { formatDistance } from "date-fns";
 import ElectricityMapsCard from "./card";
+import { apiFetch } from "@/lib/api";
 
 export default async function ElectricityMapsContainer() {
-  const res = await fetch(
-    `${
-      process.env.API_BASE_URL ?? ""
-    }/api/v1/electricitymaps/power_breakdown/latest`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "X-API-Key": process.env.API_KEY ?? "",
-      },
-    }
+  const powerBreakdown = await apiFetch<GetPowerBreakdownResponse>(
+    "/api/v1/electricitymaps/power_breakdown/latest"
   );
-  if (res.status !== 200) {
+  if (!powerBreakdown) {
     return (
       <Container isAlert>
         <Title title="power breakdown" />
@@ -29,8 +21,6 @@ export default async function ElectricityMapsContainer() {
       </Container>
     );
   } else {
-    const powerBreakdown = (await res.json()) as GetPowerBreakdownResponse;
-
     if (powerBreakdown) {
       // This is a server component, so anything formatted here is formatted in
       // the container's timezone, which is UTC. `formatRelative` produced

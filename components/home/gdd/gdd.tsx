@@ -2,19 +2,14 @@ import Container from "@/components/layout/container/container";
 import Title from "@/components/layout/container/title";
 import { GDDChart } from "./gdd-chart";
 import { GDDSummary } from "./types";
+import { apiFetch } from "@/lib/api";
 
 // GDDContainer fetches the year-to-date growing degree days and shows the
 // accumulated total plus a cumulative chart.
 export default async function GDDContainer() {
-  const res = await fetch(`${process.env.API_BASE_URL ?? ""}/api/v1/gdd`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "X-API-Key": process.env.API_KEY ?? "",
-    },
-  });
+  const s = await apiFetch<GDDSummary>("/api/v1/gdd");
 
-  if (res.status !== 200) {
+  if (!s) {
     return (
       <Container isAlert>
         <Title title="degree days" />
@@ -22,8 +17,6 @@ export default async function GDDContainer() {
       </Container>
     );
   }
-
-  const s = (await res.json()) as GDDSummary;
 
   return (
     <Container>

@@ -1,5 +1,6 @@
 import { formatDistance } from "date-fns";
 import { LastResponse } from "./types";
+import { apiFetch } from "@/lib/api";
 
 export type CurrentCardProps = {
   field: string;
@@ -13,17 +14,10 @@ export default async function CurrentCard({
 }: {
   props: CurrentCardProps;
 }) {
-  const res = await fetch(
-    `${process.env.API_BASE_URL ?? ""}/api/v1/${props.field}/last`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "X-API-Key": process.env.API_KEY ?? "",
-      },
-    }
+  const lastData = await apiFetch<LastResponse>(
+    `/api/v1/${props.field}/last`
   );
-  if (res.status !== 200) {
+  if (!lastData) {
     return (
       <div className="rounded-lg border border-destructive bg-red-50 dark:bg-red-950 p-3">
         <p className="text-xs text-muted-foreground">{props.title}</p>
@@ -31,7 +25,6 @@ export default async function CurrentCard({
       </div>
     );
   } else {
-    const lastData = (await res.json()) as LastResponse;
     let lastDataLast = lastData.last;
 
     if (props.transform) {

@@ -5,10 +5,7 @@ import Title from "@/components/layout/container/title";
 import BrowseForm from "@/components/records/browse-form";
 import BrowseResult from "@/components/records/browse-result";
 import RecordsOverview from "@/components/records/records-overview";
-import {
-  PeriodCardSkeleton,
-  RecordsOverviewSkeleton,
-} from "@/components/records/records-suspense";
+import { PeriodCardSkeleton } from "@/components/records/records-suspense";
 import { isRecordPeriod } from "@/components/records/types";
 
 export const dynamic = "force-dynamic";
@@ -46,9 +43,7 @@ export default async function RecordsPage({
         </Suspense>
       )}
 
-      <Suspense fallback={<RecordsOverviewSkeleton />}>
-        <RecordsOverview />
-      </Suspense>
+      <RecordsOverview />
     </div>
   );
 }
