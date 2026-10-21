@@ -58,8 +58,10 @@ const blocks: blockProps[] = [
     field: "rain_rate",
     lineChartCardConfig: {
       title: "Rain Rate",
-      description: "rain rate in counts per hour",
-      unit: " c/hr",
+      description: "rain rate in inches per hour",
+      unit: " in/hr",
+      // The station reports bucket tips of 0.01 in.
+      scale: 0.01,
     },
   },
   {

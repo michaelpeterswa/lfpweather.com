@@ -41,7 +41,16 @@ export default async function LineWrapper({
       </Card>
     );
   } else {
-    lineChartCardConfig.chartData = chartData;
+    const scale = lineChartCardConfig.scale;
+    lineChartCardConfig.chartData =
+      scale === undefined
+        ? chartData
+        : chartData.map((p) => ({
+            ...p,
+            min: p.min * scale,
+            avg: p.avg * scale,
+            max: p.max * scale,
+          }));
 
     return <LineChartCard config={lineChartCardConfig} />;
   }
