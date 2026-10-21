@@ -21,10 +21,18 @@ export type CameraCardProps = {
   description: string;
   url: string;
   disabled?: boolean;
+  /**
+   * Width / height of the thumbnail frame. Defaults to 16:9, which suits the
+   * cameras. Square-ish forecast maps set their own so they fill the card
+   * rather than sit in a letterbox. The image is always contained, never
+   * stretched, so a source that changes size only ever letterboxes.
+   */
+  aspectRatio?: number;
 };
 
 export default function CameraCard({ props }: { props: CameraCardProps }) {
-  const unoptimized = props.url.endsWith(".gif") ? true : false;
+  const unoptimized = props.url.endsWith(".gif");
+  const ratio = props.aspectRatio ?? 16 / 9;
 
   return (
     <Card className="w-full">
@@ -39,27 +47,41 @@ export default function CameraCard({ props }: { props: CameraCardProps }) {
               <DialogTitle>{props.title}</DialogTitle>
             </VisuallyHidden>
             <DialogTrigger asChild>
-              <AspectRatio ratio={16 / 9}>
+              <AspectRatio
+                ratio={ratio}
+                className="bg-muted"
+              >
                 <Image
                   unoptimized={unoptimized}
                   src={props.url}
                   alt={props.title}
-                  className=""
+                  className="object-contain"
                   fill={true}
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 640px"
                 />
               </AspectRatio>
             </DialogTrigger>
-            <DialogContent className="max-w-7xl border-0 bg-transparent p-0">
-              <div className="relative w-full overflow-clip rounded-lg bg-transparent shadow-md">
-                <AspectRatio ratio={16 / 9}>
-                  <Image
-                    src={props.url}
-                    fill
-                    alt={props.title}
-                    className="h-full w-full object-fill"
-                  />
-                </AspectRatio>
+            <DialogContent
+              aria-describedby={undefined}
+              className="w-auto max-w-none border-0 bg-transparent p-0 shadow-none"
+            >
+              {/* The largest box of the image's proportions that fits the
+                  viewport, so the close button sits on the image's corner. */}
+              <div
+                className="relative"
+                style={{
+                  width: `min(95vw, calc(85vh * ${ratio}))`,
+                  aspectRatio: ratio,
+                }}
+              >
+                <Image
+                  unoptimized={unoptimized}
+                  src={props.url}
+                  fill
+                  alt={props.title}
+                  className="object-contain"
+                  sizes="95vw"
+                />
               </div>
             </DialogContent>
           </Dialog>
