@@ -22,5 +22,7 @@ export type LineChartCardConfig = {
   trend?: Trend;
   footer?: string;
   unit: string;
+  /** Multiplies every raw value from the API, to convert it into `unit`. */
+  scale?: number;
   chartData?: LineSection[];
 };

@@ -9,6 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import {
+  MetricMeta,
   MetricRecord,
   METRIC_META,
   RecordExtreme,
@@ -65,13 +66,13 @@ function MetricRow({
   withYear: boolean;
   anyLow: boolean;
 }) {
-  const meta = METRIC_META[record.metric] ?? { label: record.metric, unit: "" };
+  const meta: MetricMeta = METRIC_META[record.metric] ?? { label: record.metric, unit: "" };
   return (
     <TableRow>
       <TableCell className="text-sm font-medium align-top">{meta.label}</TableCell>
       <TableCell className="align-top">
         {record.high ? (
-          <Extreme extreme={record.high} unit={meta.unit} withYear={withYear} />
+          <Extreme extreme={record.high} meta={meta} withYear={withYear} />
         ) : (
           <Dash />
         )}
@@ -79,7 +80,7 @@ function MetricRow({
       {anyLow && (
         <TableCell className="align-top">
           {record.low ? (
-            <Extreme extreme={record.low} unit={meta.unit} withYear={withYear} />
+            <Extreme extreme={record.low} meta={meta} withYear={withYear} />
           ) : (
             <Dash />
           )}
@@ -91,19 +92,19 @@ function MetricRow({
 
 function Extreme({
   extreme,
-  unit,
+  meta,
   withYear,
 }: {
   extreme: RecordExtreme;
-  unit: string;
+  meta: MetricMeta;
   withYear: boolean;
 }) {
   return (
     <div className="leading-tight">
       <div className="font-mono-data text-sm font-bold tracking-tight">
-        {fmtValue(extreme.value)}
-        {unit && (
-          <span className="ml-0.5 text-xs font-normal text-muted-foreground">{unit}</span>
+        {fmtValue(extreme.value * (meta.scale ?? 1), meta.decimals)}
+        {meta.unit && (
+          <span className="ml-0.5 text-xs font-normal text-muted-foreground">{meta.unit}</span>
         )}
       </div>
       <div className="text-xs text-muted-foreground">{fmtTime(extreme.time, withYear)}</div>
