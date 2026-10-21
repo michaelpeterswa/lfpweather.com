@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
-export default function SolarLatestCardSuspense({ title }: { title: string }) {
+export default function QueryLatestCardSuspense({ title }: { title: string }) {
   return (
     <div className="rounded-lg border bg-secondary/50 p-3">
       <p className="text-xs text-muted-foreground truncate">{title}</p>

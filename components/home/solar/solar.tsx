@@ -3,8 +3,8 @@ import Container from "@/components/layout/container/container";
 import Title from "@/components/layout/container/title";
 import { LineChartCardConfig } from "@/components/home/charts/line/types";
 import QueryLineWrapper from "./query-line-wrapper";
-import SolarLatestCard, { SolarLatestCardProps } from "./query-latest-card";
-import SolarLatestCardSuspense from "./query-latest-card-suspense";
+import QueryLatestCard, { QueryLatestCardProps } from "@/components/home/current/query-latest-card";
+import QueryLatestCardSuspense from "@/components/home/current/query-latest-card-suspense";
 import LineChartCardSuspense from "@/components/home/charts/line/line-suspense";
 
 // Sources, and why they are what they are.
@@ -21,7 +21,7 @@ import LineChartCardSuspense from "@/components/home/charts/line/line-suspense";
 // because the shunt does not measure it.
 
 // Current-value tiles: the at-a-glance state of the off-grid power system.
-const latestCards: SolarLatestCardProps[] = [
+const latestCards: QueryLatestCardProps[] = [
   { metric: "battery_soc", title: "Battery SoC", unit: "%" },
   { metric: "pack_voltage", title: "Pack Voltage", unit: "V" },
   { metric: "solar_power", title: "Solar Power", unit: "W" },
@@ -92,9 +92,9 @@ export default function SolarContainer() {
         {latestCards.map((card) => (
           <Suspense
             key={card.metric}
-            fallback={<SolarLatestCardSuspense title={card.title} />}
+            fallback={<QueryLatestCardSuspense title={card.title} />}
           >
-            <SolarLatestCard props={card} />
+            <QueryLatestCard props={card} />
           </Suspense>
         ))}
       </div>
