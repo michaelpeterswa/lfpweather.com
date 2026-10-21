@@ -7,6 +7,7 @@ import { formatDistance } from "date-fns";
 import ShareButton from "@/components/share/share-button";
 import WeatherIcon from "@/components/weather/icons";
 import { apiFetch } from "@/lib/api";
+import { SectionError } from "@/components/layout/error-state";
 
 export default async function AIForecastContainer() {
   const forecast = await apiFetch<AIForecastResponse>(
@@ -15,12 +16,7 @@ export default async function AIForecastContainer() {
   );
   if (!forecast) {
     return (
-      <Container isAlert>
-        <Title title="ai forecast" />
-        <div className="border-destructive bg-red-50 dark:bg-red-950 border rounded-lg p-4 flex justify-center">
-          <h1>failed to get ai forecast</h1>
-        </div>
-      </Container>
+      <SectionError title="ai forecast" message="failed to get ai forecast" />
     );
   } else {
     if (forecast) {

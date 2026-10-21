@@ -3,6 +3,7 @@ import Title from "@/components/layout/container/title";
 import { GDDChart } from "./gdd-chart";
 import { GDDSummary } from "./types";
 import { apiFetch } from "@/lib/api";
+import { SectionError } from "@/components/layout/error-state";
 
 // GDDContainer fetches the year-to-date growing degree days and shows the
 // accumulated total plus a cumulative chart.
@@ -11,10 +12,7 @@ export default async function GDDContainer() {
 
   if (!s) {
     return (
-      <Container isAlert>
-        <Title title="degree days" />
-        <p className="text-destructive text-sm">failed to get growing degree days</p>
-      </Container>
+      <SectionError title="degree days" message="failed to get growing degree days" />
     );
   }
 

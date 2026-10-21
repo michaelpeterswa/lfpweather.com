@@ -4,6 +4,7 @@ import { formatSiteShort } from "@/lib/datetime";
 import { ForecastChart } from "./forecast-chart";
 import { TemperatureForecast, toChartPoints } from "./types";
 import { apiFetch } from "@/lib/api";
+import { SectionError } from "@/components/layout/error-state";
 
 const SOURCE_LABELS: Record<string, string> = {
   timestral: "Timestral",
@@ -19,10 +20,7 @@ export default async function TemperatureForecastContainer() {
 
   if (!f) {
     return (
-      <Container isAlert>
-        <Title title="station forecast" />
-        <p className="text-destructive text-sm">station forecast unavailable</p>
-      </Container>
+      <SectionError title="station forecast" message="station forecast unavailable" />
     );
   }
 

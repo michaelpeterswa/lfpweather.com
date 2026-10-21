@@ -1,6 +1,7 @@
 import { formatDistance } from "date-fns";
 import { LastResponse } from "./types";
 import { apiFetch } from "@/lib/api";
+import { TileError } from "@/components/layout/error-state";
 
 export type CurrentCardProps = {
   field: string;
@@ -19,10 +20,7 @@ export default async function CurrentCard({
   );
   if (!lastData) {
     return (
-      <div className="rounded-lg border border-destructive bg-red-50 dark:bg-red-950 p-3">
-        <p className="text-xs text-muted-foreground">{props.title}</p>
-        <p className="font-mono-data text-sm font-semibold text-destructive">error</p>
-      </div>
+      <TileError title={props.title} />
     );
   } else {
     let lastDataLast = lastData.last;

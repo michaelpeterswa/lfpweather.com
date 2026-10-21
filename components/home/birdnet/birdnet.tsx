@@ -10,6 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { SectionError } from "@/components/layout/error-state";
 
 export default async function BirdnetContainer() {
   const birdnetCounts = await apiFetch<BirdnetCounts>("/api/v1/birdnet/24h", {
@@ -17,12 +18,7 @@ export default async function BirdnetContainer() {
   });
   if (!birdnetCounts) {
     return (
-      <Container isAlert>
-        <Title title="BirdNET 24h" />
-        <div className="border-destructive bg-red-50 dark:bg-red-950 border rounded-lg p-4 flex justify-center">
-          <h1>failed to get bird counts</h1>
-        </div>
-      </Container>
+      <SectionError title="BirdNET 24h" message="failed to get bird counts" />
     );
   } else {
     const sorted = birdnetCounts.length === 0

@@ -4,6 +4,7 @@ import Title from "../../layout/container/title";
 import { DetailedForecastResponse } from "@/components/home/forecast/types";
 import WeatherIcon from "@/components/weather/icons";
 import { apiFetch } from "@/lib/api";
+import { SectionError } from "@/components/layout/error-state";
 
 export default async function ForecastContainer() {
   const forecast = await apiFetch<DetailedForecastResponse>(
@@ -12,12 +13,7 @@ export default async function ForecastContainer() {
   );
   if (!forecast) {
     return (
-      <Container isAlert>
-        <Title title="nws forecast" />
-        <div className="border-destructive bg-red-50 dark:bg-red-950 border rounded-lg p-4 flex justify-center">
-          <h1>failed to get forecast</h1>
-        </div>
-      </Container>
+      <SectionError title="nws forecast" message="failed to get forecast" />
     );
   } else {
     if (forecast.periods && forecast.periods.length > 0) {
