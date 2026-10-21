@@ -1,18 +1,11 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { LineChartCard } from "@/components/home/charts/line/line";
 import {
   LineChartCardConfig,
   LineSection,
 } from "@/components/home/charts/line/types";
-import { CloudLightning } from "lucide-react";
 import { QueryResponse } from "./types";
 import { apiFetch } from "@/lib/api";
+import { ChartCardError } from "@/components/layout/error-state";
 
 // QueryLineWrapper is the /api/v1/query analog of LineWrapper: it POSTs a
 // structured query for a single metric and adapts the {points:[{time,avg,min,
@@ -48,26 +41,15 @@ export default async function QueryLineWrapper({
   // indexes chartData[0]); show the same failure card LineWrapper uses.
   if (chartData === null || chartData.length === 0) {
     return (
-      <Card className="w-full">
-        <CardHeader className="pb-2">
-          <CardTitle className="text-sm font-semibold tracking-wide">
-            {lineChartCardConfig.title}
-          </CardTitle>
-          <CardDescription className="text-xs">
-            {lineChartCardConfig.description}
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="bg-red-50 dark:bg-red-950 border-destructive border rounded-lg p-4 m-4">
-          <div className="flex flex-col items-center">
-            <CloudLightning size={48} className="text-destructive flex-grow" />
-            <h1 className="text-destructive flex-none">
-              {chartData === null
-                ? `failed to get ${metric}`
-                : `no data for ${metric}`}
-            </h1>
-          </div>
-        </CardContent>
-      </Card>
+      <ChartCardError
+        title={lineChartCardConfig.title}
+        description={lineChartCardConfig.description}
+        message={
+          chartData === null
+            ? `failed to get ${metric}`
+            : `no data for ${metric}`
+        }
+      />
     );
   }
 

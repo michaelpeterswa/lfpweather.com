@@ -1,15 +1,8 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { CloudLightning } from "lucide-react";
 import { QueryResponse } from "@/components/home/solar/types";
 import { ErcChart } from "./erc-chart";
 import { ErcPoint } from "./types";
 import { apiFetch } from "@/lib/api";
+import { ChartCardError } from "@/components/layout/error-state";
 
 // ErcChartWrapper fetches the ERC series from the structured query endpoint and
 // adapts it for ErcChart. It reuses the shared QueryResponse shape. The window
@@ -43,24 +36,11 @@ export default async function ErcChartWrapper({
 
   if (data === null || data.length === 0) {
     return (
-      <Card className="w-full">
-        <CardHeader className="pb-2">
-          <CardTitle className="text-sm font-semibold tracking-wide">
-            Energy release trend
-          </CardTitle>
-          <CardDescription className="text-xs">
-            90-day Energy Release Component
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="bg-red-50 dark:bg-red-950 border-destructive border rounded-lg p-4 m-4">
-          <div className="flex flex-col items-center">
-            <CloudLightning size={48} className="text-destructive flex-grow" />
-            <h1 className="text-destructive flex-none">
-              {data === null ? "failed to get erc" : "no data for erc"}
-            </h1>
-          </div>
-        </CardContent>
-      </Card>
+      <ChartCardError
+        title="Energy release trend"
+        description="90-day Energy Release Component"
+        message={data === null ? "failed to get erc" : "no data for erc"}
+      />
     );
   }
 

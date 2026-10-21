@@ -6,6 +6,7 @@ import { VBarChartCard } from "../charts/vbar/vbar";
 import { formatDistance } from "date-fns";
 import ElectricityMapsCard from "./card";
 import { apiFetch } from "@/lib/api";
+import { SectionError } from "@/components/layout/error-state";
 
 export default async function ElectricityMapsContainer() {
   const powerBreakdown = await apiFetch<GetPowerBreakdownResponse>(
@@ -13,12 +14,7 @@ export default async function ElectricityMapsContainer() {
   );
   if (!powerBreakdown) {
     return (
-      <Container isAlert>
-        <Title title="power breakdown" />
-        <div className="border-destructive bg-red-50 dark:bg-red-950 border rounded-lg p-4 flex justify-center">
-          <h1>failed to get power breakdown</h1>
-        </div>
-      </Container>
+      <SectionError title="power breakdown" message="failed to get power breakdown" />
     );
   } else {
     if (powerBreakdown) {

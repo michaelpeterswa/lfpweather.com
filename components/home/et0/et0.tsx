@@ -3,6 +3,7 @@ import Title from "@/components/layout/container/title";
 import { ET0Chart } from "./et0-chart";
 import { ET0Summary } from "./types";
 import { apiFetch } from "@/lib/api";
+import { SectionError } from "@/components/layout/error-state";
 
 // ET0Container fetches the year-to-date reference evapotranspiration and shows
 // the accumulated water demand plus a cumulative chart.
@@ -11,10 +12,7 @@ export default async function ET0Container() {
 
   if (!s) {
     return (
-      <Container isAlert>
-        <Title title="evapotranspiration" />
-        <p className="text-destructive text-sm">failed to get evapotranspiration</p>
-      </Container>
+      <SectionError title="evapotranspiration" message="failed to get evapotranspiration" />
     );
   }
 

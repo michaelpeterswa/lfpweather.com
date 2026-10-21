@@ -9,6 +9,8 @@ export default function RaspberryShakeContainer() {
       <Card>
         <CardContent className="p-4 flex justify-center">
           <iframe
+            title="Raspberry Shake seismograph for station AM.S9561"
+            loading="lazy"
             className="w-full h-96 rounded"
             src="https://dataview.raspberryshake.org/#/embed/AM/S9561/00/EHZ"
           ></iframe>

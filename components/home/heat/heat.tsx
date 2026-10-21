@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { FIRE_BORDER_L, FIRE_TEXT } from "@/components/home/fireweather/fire-levels";
 import { WBGTReading } from "./types";
 import { apiFetch } from "@/lib/api";
+import { SectionError } from "@/components/layout/error-state";
 
 const cToF = (c: number) => Math.round(c * 1.8 + 32);
 
@@ -35,10 +36,7 @@ export default async function HeatStressContainer() {
 
   if (!s) {
     return (
-      <Container isAlert>
-        <Title title="heat stress" />
-        <p className="text-destructive text-sm">failed to get heat stress</p>
-      </Container>
+      <SectionError title="heat stress" message="failed to get heat stress" />
     );
   }
 

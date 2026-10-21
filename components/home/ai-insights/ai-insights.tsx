@@ -7,6 +7,7 @@ import { formatDistance } from "date-fns";
 import WeatherIcon from "@/components/weather/icons";
 import { isSectionEnabled } from "@/lib/sections";
 import { apiFetch } from "@/lib/api";
+import { SectionError } from "@/components/layout/error-state";
 
 const ALL_INSIGHTS: InsightConfig[] = [
   { key: "current", label: "Right Now", path: "/api/v1/current" },
@@ -32,12 +33,7 @@ export default async function AIInsightsContainer() {
 
   if (rows.length === 0) {
     return (
-      <Container isAlert>
-        <Title title="at a glance" />
-        <div className="border-destructive bg-red-50 dark:bg-red-950 border rounded-lg p-4 flex justify-center">
-          <h1>failed to get insights</h1>
-        </div>
-      </Container>
+      <SectionError title="at a glance" message="failed to get insights" />
     );
   }
 

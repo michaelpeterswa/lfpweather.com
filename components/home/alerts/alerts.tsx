@@ -10,6 +10,7 @@ import {
 import React from "react";
 import Title from "@/components/layout/container/title";
 import { apiFetch } from "@/lib/api";
+import { SectionError } from "@/components/layout/error-state";
 
 export default async function AlertsContainer({ zone }: { zone: string }) {
   const alerts = await apiFetch<NWSAlertActiveZoneResponse>(
@@ -18,12 +19,7 @@ export default async function AlertsContainer({ zone }: { zone: string }) {
 
   if (!alerts) {
     return (
-      <Container isAlert>
-        <Title title="nws alerts" />
-        <div className="bg-red-50 dark:bg-red-950 border-destructive border rounded-lg p-4 flex justify-center">
-          <h1>failed to get nws alerts</h1>
-        </div>
-      </Container>
+      <SectionError title="nws alerts" message="failed to get nws alerts" />
     );
   } else {
     if (alerts.features && alerts.features.length > 0) {

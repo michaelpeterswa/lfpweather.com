@@ -6,6 +6,7 @@ import ErcChartWrapper from "./erc-chart-wrapper";
 import { FireDangerSummary } from "./types";
 import { apiFetch } from "@/lib/api";
 import { biLevel, dead10hrLevel, kbdiLevel } from "./fire-levels";
+import { SectionError } from "@/components/layout/error-state";
 
 // FireWeatherContainer fetches the season-calibrated fire danger summary and
 // composes the hero rating, the labeled index tiles, and the ERC trend.
@@ -14,12 +15,7 @@ export default async function FireWeatherContainer() {
 
   if (!s) {
     return (
-      <Container isAlert>
-        <Title title="fire weather" />
-        <p className="text-destructive text-sm">
-          failed to get fire danger data
-        </p>
-      </Container>
+      <SectionError title="fire weather" message="failed to get fire danger data" />
     );
   }
 

@@ -11,7 +11,7 @@ export default function Container({
     <div
       className={cn(
         "rounded-lg border bg-card p-4 shadow-sm",
-        isAlert && "border-destructive bg-red-50 dark:bg-red-950"
+        isAlert && "border-destructive bg-destructive/10"
       )}
     >
       {children}

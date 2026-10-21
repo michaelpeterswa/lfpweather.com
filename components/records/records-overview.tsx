@@ -1,10 +1,9 @@
 import { Suspense } from "react";
-import Container from "@/components/layout/container/container";
-import Title from "@/components/layout/container/title";
 import PeriodCard from "./period-card";
 import { fetchRecords } from "./fetch";
 import { PeriodCardSkeleton } from "./records-suspense";
 import { CURRENT_LABEL, RECORD_PERIODS, RecordPeriod } from "./types";
+import { SectionError } from "@/components/layout/error-state";
 
 // RecordsOverview shows one card per in-progress period. Each card loads behind
 // its own Suspense boundary, so a slow period (all-time scans the whole
@@ -29,10 +28,7 @@ async function PeriodOverview({ period }: { period: RecordPeriod }) {
   const heading = CURRENT_LABEL[period];
   if (!data) {
     return (
-      <Container isAlert>
-        <Title title={heading} />
-        <p className="text-destructive text-sm">failed to load {heading} records</p>
-      </Container>
+      <SectionError title={heading} message={`failed to load ${heading} records`} />
     );
   }
   return (
