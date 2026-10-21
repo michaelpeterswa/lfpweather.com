@@ -1,6 +1,7 @@
 import Container from "@/components/layout/container/container";
 import Title from "@/components/layout/container/title";
 import { BirdnetCounts } from "./types";
+import { apiFetch } from "@/lib/api";
 import {
   Table,
   TableBody,
@@ -11,17 +12,10 @@ import {
 } from "@/components/ui/table";
 
 export default async function BirdnetContainer() {
-  const res = await fetch(
-    `${process.env.API_BASE_URL ?? ""}/api/v1/birdnet/24h`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "X-API-Key": process.env.API_KEY ?? "",
-      },
-    }
-  );
-  if (res.status !== 200) {
+  const birdnetCounts = await apiFetch<BirdnetCounts>("/api/v1/birdnet/24h", {
+    nullBody: [],
+  });
+  if (!birdnetCounts) {
     return (
       <Container isAlert>
         <Title title="BirdNET 24h" />
@@ -31,9 +25,7 @@ export default async function BirdnetContainer() {
       </Container>
     );
   } else {
-    const birdnetCounts = (await res.json()) as BirdnetCounts;
-
-    const sorted = (!birdnetCounts || birdnetCounts.length === 0)
+    const sorted = birdnetCounts.length === 0
       ? []
       : [...birdnetCounts].sort((a, b) => b.count - a.count);
 

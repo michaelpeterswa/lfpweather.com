@@ -1,8 +1,11 @@
+import { Suspense } from "react";
 import Container from "@/components/layout/container/container";
 import Title from "@/components/layout/container/title";
 import { LineChartCardConfig } from "@/components/home/charts/line/types";
 import QueryLineWrapper from "./query-line-wrapper";
 import SolarLatestCard, { SolarLatestCardProps } from "./query-latest-card";
+import SolarLatestCardSuspense from "./query-latest-card-suspense";
+import LineChartCardSuspense from "@/components/home/charts/line/line-suspense";
 
 // Sources, and why they are what they are.
 //
@@ -86,18 +89,27 @@ export default function SolarContainer() {
     <Container>
       <Title title="solar & batteries" />
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
-        {latestCards.map((card, i) => (
-          <SolarLatestCard key={i} props={card} />
+        {latestCards.map((card) => (
+          <Suspense
+            key={card.metric}
+            fallback={<SolarLatestCardSuspense title={card.title} />}
+          >
+            <SolarLatestCard props={card} />
+          </Suspense>
         ))}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {chartBlocks.map((block) => (
-          <QueryLineWrapper
+          <Suspense
             key={block.metric}
-            metric={block.metric}
-            range="7d"
-            lineChartCardConfig={block.config}
-          />
+            fallback={<LineChartCardSuspense config={block.config} />}
+          >
+            <QueryLineWrapper
+              metric={block.metric}
+              range="7d"
+              lineChartCardConfig={block.config}
+            />
+          </Suspense>
         ))}
       </div>
     </Container>

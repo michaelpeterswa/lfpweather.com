@@ -20,13 +20,3 @@ export function PeriodCardSkeleton({ heading }: { heading: string }) {
   );
 }
 
-// RecordsOverviewSkeleton mirrors the five-card overview grid.
-export function RecordsOverviewSkeleton() {
-  return (
-    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-      {["Today", "This Week", "This Month", "This Year", "All-Time"].map((h) => (
-        <PeriodCardSkeleton key={h} heading={h} />
-      ))}
-    </div>
-  );
-}

@@ -12,8 +12,10 @@ import AIInsightsContainer from "@/components/home/ai-insights/ai-insights";
 import AIInsightsContainerSuspense from "@/components/home/ai-insights/ai-insights-suspense";
 import ForecastContainerSuspense from "@/components/home/forecast/forecast-suspense";
 import ElectricityMapsContainer from "@/components/home/electricitymaps/electricitymaps";
+import ElectricityMapsContainerSuspense from "@/components/home/electricitymaps/electricitymaps-suspense";
 import RaspberryShakeContainer from "@/components/home/raspberryshake/raspberryshake";
 import BirdnetContainer from "@/components/home/birdnet/birdnet";
+import BirdnetContainerSuspense from "@/components/home/birdnet/birdnet-suspense";
 import SolarContainer from "@/components/home/solar/solar";
 import FireWeatherContainer from "@/components/home/fireweather/fireweather";
 import FireWeatherContainerSuspense from "@/components/home/fireweather/fireweather-suspense";
@@ -79,8 +81,13 @@ export default function Home() {
 
   return (
     <div className="space-y-6">
-      {/* Alerts - full width */}
-      {on("nws-alerts") && <AlertsContainer zone="WAZ313" />}
+      {/* Alerts - full width. No skeleton: there are usually no alerts, and a
+          placeholder would flash and collapse on almost every load. */}
+      {on("nws-alerts") && (
+        <Suspense fallback={null}>
+          <AlertsContainer zone="WAZ313" />
+        </Suspense>
+      )}
 
       {/* Current Conditions - hero grid */}
       {on("current-conditions") && (
@@ -150,7 +157,11 @@ export default function Home() {
               : "grid grid-cols-1 gap-6"
           }
         >
-          {birdnet && <BirdnetContainer />}
+          {birdnet && (
+            <Suspense fallback={<BirdnetContainerSuspense />}>
+              <BirdnetContainer />
+            </Suspense>
+          )}
           {seismology && <RaspberryShakeContainer />}
         </div>
       )}
@@ -179,7 +190,11 @@ export default function Home() {
       )}
 
       {/* Power Breakdown */}
-      {on("power-breakdown") && <ElectricityMapsContainer />}
+      {on("power-breakdown") && (
+        <Suspense fallback={<ElectricityMapsContainerSuspense />}>
+          <ElectricityMapsContainer />
+        </Suspense>
+      )}
     </div>
   );
 }

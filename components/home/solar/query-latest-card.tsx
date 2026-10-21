@@ -1,5 +1,6 @@
 import { formatDistance } from "date-fns";
 import { QueryResponse } from "./types";
+import { apiFetch } from "@/lib/api";
 
 export type SolarLatestCardProps = {
   metric: string;
@@ -20,16 +21,8 @@ export default async function SolarLatestCard({
 }: {
   props: SolarLatestCardProps;
 }) {
-  // A dropped connection (ECONNRESET) makes fetch throw; treat it like any
-  // other failed response so this card shows its error state instead of
-  // failing the whole section.
-  const res = await fetch(`${process.env.API_BASE_URL ?? ""}/api/v1/query`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-API-Key": process.env.API_KEY ?? "",
-    },
-    body: JSON.stringify({
+  const res = await apiFetch<QueryResponse>("/api/v1/query", {
+    body: {
       metric: props.metric,
       // The bucket size sets how wrong the timestamp can be, because a point's
       // `time` is the START of its bucket rather than the moment of the
@@ -43,11 +36,10 @@ export default async function SolarLatestCard({
       range: "24h",
       bucket: "5m",
       aggregations: ["last"],
-    }),
-  }).catch(() => null);
+    },
+  });
 
-  const points =
-    res?.status === 200 ? ((await res.json()) as QueryResponse).points : [];
+  const points = res?.points ?? [];
   const latest = points.length > 0 ? points[points.length - 1] : undefined;
 
   if (!latest || latest.last === undefined || latest.last === null) {

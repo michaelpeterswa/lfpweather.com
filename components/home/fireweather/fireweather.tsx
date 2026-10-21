@@ -4,23 +4,15 @@ import DangerRating from "./danger-rating";
 import FireStat from "./fire-stat";
 import ErcChartWrapper from "./erc-chart-wrapper";
 import { FireDangerSummary } from "./types";
+import { apiFetch } from "@/lib/api";
 import { biLevel, dead10hrLevel, kbdiLevel } from "./fire-levels";
 
 // FireWeatherContainer fetches the season-calibrated fire danger summary and
 // composes the hero rating, the labeled index tiles, and the ERC trend.
 export default async function FireWeatherContainer() {
-  const res = await fetch(
-    `${process.env.API_BASE_URL ?? ""}/api/v1/fire_danger/summary`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "X-API-Key": process.env.API_KEY ?? "",
-      },
-    }
-  );
+  const s = await apiFetch<FireDangerSummary>("/api/v1/fire_danger/summary");
 
-  if (res.status !== 200) {
+  if (!s) {
     return (
       <Container isAlert>
         <Title title="fire weather" />
@@ -30,8 +22,6 @@ export default async function FireWeatherContainer() {
       </Container>
     );
   }
-
-  const s = (await res.json()) as FireDangerSummary;
 
   const bi = biLevel(s.burning_index.value, s.burning_index.p90, s.burning_index.p97);
   const drought = kbdiLevel(s.drought.kbdi);

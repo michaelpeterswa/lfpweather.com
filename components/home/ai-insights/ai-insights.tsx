@@ -6,6 +6,7 @@ import { Sparkles } from "lucide-react";
 import { formatDistance } from "date-fns";
 import WeatherIcon from "@/components/weather/icons";
 import { isSectionEnabled } from "@/lib/sections";
+import { apiFetch } from "@/lib/api";
 
 const ALL_INSIGHTS: InsightConfig[] = [
   { key: "current", label: "Right Now", path: "/api/v1/current" },
@@ -13,32 +14,15 @@ const ALL_INSIGHTS: InsightConfig[] = [
   { key: "fire", label: "Fire Weather", path: "/api/v1/fire_weather" },
 ];
 
-async function fetchInsight(path: string): Promise<AIInsightResponse | null> {
-  try {
-    const res = await fetch(
-      `${process.env.FORECAST_INFERENCE_API_BASE_URL ?? ""}${path}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "X-API-Key": process.env.API_KEY ?? "",
-        },
-      }
-    );
-    if (res.status !== 200) {
-      return null;
-    }
-    return (await res.json()) as AIInsightResponse;
-  } catch {
-    return null;
-  }
-}
-
 export default async function AIInsightsContainer() {
   const INSIGHTS = ALL_INSIGHTS.filter(
     (i) => i.key !== "fire" || isSectionEnabled("ai-insights-fire")
   );
-  const results = await Promise.all(INSIGHTS.map((i) => fetchInsight(i.path)));
+  const results = await Promise.all(
+    INSIGHTS.map((i) =>
+      apiFetch<AIInsightResponse>(i.path, { base: "forecast" })
+    )
+  );
   const rows = INSIGHTS.map((config, idx) => ({
     config,
     data: results[idx],

@@ -8,6 +8,7 @@ import {
 import { LineChartCard } from "./line";
 import { LineChartCardConfig, LineSection } from "./types";
 import { CloudLightning } from "lucide-react";
+import { apiFetch } from "@/lib/api";
 
 export default async function LineWrapper({
   field,
@@ -18,18 +19,11 @@ export default async function LineWrapper({
   lineChartCardConfig: LineChartCardConfig;
   lookback: string;
 }) {
-  const res = await fetch(
-    `${process.env.API_BASE_URL ?? ""}/api/v1/${field}/${lookback}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "X-API-Key": process.env.API_KEY ?? "",
-      },
-    }
+  const chartData = await apiFetch<LineSection[]>(
+    `/api/v1/${field}/${lookback}`
   );
 
-  if (res.status !== 200) {
+  if (!chartData) {
     return (
       <Card className="w-full">
         <CardHeader className="pb-2">
@@ -47,8 +41,6 @@ export default async function LineWrapper({
       </Card>
     );
   } else {
-    const chartData = (await res.json()) as LineSection[];
-
     lineChartCardConfig.chartData = chartData;
 
     return <LineChartCard config={lineChartCardConfig} />;

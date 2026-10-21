@@ -9,6 +9,7 @@ import { CloudLightning } from "lucide-react";
 import { QueryResponse } from "@/components/home/solar/types";
 import { ErcChart } from "./erc-chart";
 import { ErcPoint } from "./types";
+import { apiFetch } from "@/lib/api";
 
 // ErcChartWrapper fetches the ERC series from the structured query endpoint and
 // adapts it for ErcChart. It reuses the shared QueryResponse shape. The window
@@ -20,25 +21,17 @@ export default async function ErcChartWrapper({
   p90: number;
   p97: number;
 }) {
-  // A dropped connection (ECONNRESET) makes fetch throw; treat it like any
-  // other failed response so this card shows its error state instead of
-  // failing the whole section.
-  const res = await fetch(`${process.env.API_BASE_URL ?? ""}/api/v1/query`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-API-Key": process.env.API_KEY ?? "",
-    },
-    body: JSON.stringify({
+  const res = await apiFetch<QueryResponse>("/api/v1/query", {
+    body: {
       metric: "erc",
       range: "90d",
       aggregations: ["avg", "min", "max"],
-    }),
-  }).catch(() => null);
+    },
+  });
 
   const data =
-    res?.status === 200
-      ? (await res.json() as QueryResponse).points.map(
+    res !== null
+      ? res.points.map(
           (p): ErcPoint => ({
             time: p.time,
             min: p.min ?? p.avg ?? 0,

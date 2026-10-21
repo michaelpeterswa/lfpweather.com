@@ -3,21 +3,14 @@ import Container from "../../layout/container/container";
 import Title from "../../layout/container/title";
 import { DetailedForecastResponse } from "@/components/home/forecast/types";
 import WeatherIcon from "@/components/weather/icons";
+import { apiFetch } from "@/lib/api";
 
 export default async function ForecastContainer() {
-  const res = await fetch(
-    `${
-      process.env.FORECAST_INFERENCE_API_BASE_URL ?? ""
-    }/api/v1/forecast/detailed`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "X-API-Key": process.env.API_KEY ?? "",
-      },
-    }
+  const forecast = await apiFetch<DetailedForecastResponse>(
+    "/api/v1/forecast/detailed",
+    { base: "forecast" }
   );
-  if (res.status !== 200) {
+  if (!forecast) {
     return (
       <Container isAlert>
         <Title title="nws forecast" />
@@ -27,9 +20,7 @@ export default async function ForecastContainer() {
       </Container>
     );
   } else {
-    const forecast = (await res.json()) as DetailedForecastResponse;
-
-    if (forecast && forecast.periods && forecast.periods.length > 0) {
+    if (forecast.periods && forecast.periods.length > 0) {
       return (
         <Container>
           <Title title="nws forecast" />

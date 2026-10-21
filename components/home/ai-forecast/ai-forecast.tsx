@@ -6,21 +6,14 @@ import { BrainCircuit } from "lucide-react";
 import { formatDistance } from "date-fns";
 import ShareButton from "@/components/share/share-button";
 import WeatherIcon from "@/components/weather/icons";
+import { apiFetch } from "@/lib/api";
 
 export default async function AIForecastContainer() {
-  const res = await fetch(
-    `${
-      process.env.FORECAST_INFERENCE_API_BASE_URL ?? ""
-    }/api/v1/forecast/summary`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "X-API-Key": process.env.API_KEY ?? "",
-      },
-    }
+  const forecast = await apiFetch<AIForecastResponse>(
+    "/api/v1/forecast/summary",
+    { base: "forecast" }
   );
-  if (res.status !== 200) {
+  if (!forecast) {
     return (
       <Container isAlert>
         <Title title="ai forecast" />
@@ -30,8 +23,6 @@ export default async function AIForecastContainer() {
       </Container>
     );
   } else {
-    const forecast = (await res.json()) as AIForecastResponse;
-
     if (forecast) {
       const formattedTime = formatDistance(
         Date.parse(forecast.last_updated),

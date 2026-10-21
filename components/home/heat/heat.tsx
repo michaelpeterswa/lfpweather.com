@@ -3,6 +3,7 @@ import Title from "@/components/layout/container/title";
 import { cn } from "@/lib/utils";
 import { FIRE_BORDER_L, FIRE_TEXT } from "@/components/home/fireweather/fire-levels";
 import { WBGTReading } from "./types";
+import { apiFetch } from "@/lib/api";
 
 const cToF = (c: number) => Math.round(c * 1.8 + 32);
 
@@ -30,15 +31,9 @@ function Stat({
 // the heat-stress class with the WBGT, black-globe, and air temperatures. The
 // class uses the shared fire color scale (its 0..4 level).
 export default async function HeatStressContainer() {
-  const res = await fetch(`${process.env.API_BASE_URL ?? ""}/api/v1/wbgt`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "X-API-Key": process.env.API_KEY ?? "",
-    },
-  });
+  const s = await apiFetch<WBGTReading>("/api/v1/wbgt");
 
-  if (res.status !== 200) {
+  if (!s) {
     return (
       <Container isAlert>
         <Title title="heat stress" />
@@ -46,8 +41,6 @@ export default async function HeatStressContainer() {
       </Container>
     );
   }
-
-  const s = (await res.json()) as WBGTReading;
 
   return (
     <Container>
