@@ -47,6 +47,17 @@ Always use semantic color tokens (`bg-card`, `text-muted-foreground`, `border-ac
 - Wrap async containers in `<Suspense>` with matching skeleton fallback components
 - Error states: show a descriptive message inside a `border-destructive` styled container
 
+## Tests
+
+- Vitest, node environment, colocated with the module it covers
+  (`lib/sections.test.ts` for `lib/sections.ts`).
+- `bun run test` (watch: `bun run test:watch`). CI runs lint, typecheck, tests,
+  and build via `.github/workflows/verify.yml`, both on PRs and before a release
+  tag is cut.
+- No DOM or component renderer is installed, so tests stay on plain TypeScript
+  logic. Season-window, timezone, and fetch-failure changes should come with a
+  test in the matching `lib/*.test.ts`.
+
 ## Component Organization
 
 ```

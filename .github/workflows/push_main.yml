@@ -7,9 +7,17 @@ on: # yamllint disable-line rule:truthy
       - main
 
 jobs:
+  verify:
+    uses: ./.github/workflows/verify.yml
+
   release:
     name: "Release to GitHub"
     runs-on: ubuntu-latest
+    # A tag that does not compile is worse than no tag: upload_image.yml builds
+    # and pushes the image straight from the release. If verify fails here, the
+    # version is not lost -- the next push to main re-runs semantic-release over
+    # the same commits and cuts the release then.
+    needs: verify
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3

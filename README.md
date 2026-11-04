@@ -68,6 +68,36 @@ row; if both are disabled the row is omitted.
 bun run build
 ```
 
+## Checks
+
+```bash
+bun run lint        # eslint
+bun run typecheck   # tsc --noEmit
+bun run test        # vitest
+```
+
+All four run in CI (`verify.yml`, called from the PR workflow and before every
+release).
+
+## Tests
+
+Vitest, running in node. Tests sit next to the code they cover (`lib/api.test.ts`
+for `lib/api.ts`) and cover the logic that is easy to get wrong silently:
+
+- `lib/sections.test.ts` — season windows and their boundaries, and the
+  `DISABLED_SECTIONS` / `ENABLED_SECTIONS` precedence
+- `lib/datetime.test.ts` — that every timestamp renders in station time
+  whatever the container's clock is
+- `lib/api.test.ts` — that every backend failure shape returns `null` instead of
+  throwing, and what a successful request looks like on the wire
+
+UI components are not covered: no test renderer or DOM is installed, so a
+component that needs one is a signal to add that separately.
+
+```bash
+bun run test:watch
+```
+
 ## License
 
 All rights reserved.
