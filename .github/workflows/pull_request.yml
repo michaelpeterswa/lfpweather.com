@@ -2,6 +2,9 @@
 on: [pull_request] #  yamllint disable-line rule:truthy
 name: main
 jobs:
+  verify:
+    uses: ./.github/workflows/verify.yml
+
   commitlint:
     runs-on: ubuntu-latest
     steps:
